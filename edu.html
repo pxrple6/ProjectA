@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Annadatri Food Distribution</title>
+<style>
+  body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #ffffff; /* white background */
+  color: #333333;
+}
+
+/* Top menu bar */
+nav {
+  background: #2d6a4f; /* medium green */
+  padding: 15px 30px;
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #f1b93d;
+}
+
+header {
+  padding: 100px 20px 20px 20px;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 0.2rem;
+  color: #2d6a4f;
+}
+
+header h1 .highlight {
+  color: #f1b93d;
+}
+
+header p {
+  font-size: 1.3rem;
+  max-width: 700px;
+  margin: auto;
+  margin-bottom: 1.5rem;
+  color: #555555;
+}
+
+header button {
+  background-color: #2d6a4f;
+  border: none;
+  padding: 15px 30px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+header button:hover {
+  background-color: #1b4332;
+}
+
+/* Gallery container */
+.gallery-container {
+  margin: 30px auto 80px auto;
+  max-width: 1000px;
+  overflow-x: auto;
+  display: flex;
+  gap: 25px;
+  padding: 20px 70px;
+  scroll-snap-type: x mandatory;
+  background: #f7f7f7;
+  border-radius: 12px;
+}
+
+/* Each gallery item */
+.gallery-item {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  position: relative;
+  width: 280px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.caption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #2d6a4f;
+  font-weight: 600;
+}
+
+/* Highlight center image */
+.gallery-item.active {
+  transform: scale(1.2);
+  filter: brightness(1);
+  z-index: 2;
+}
+
+.gallery-item:not(.active) {
+  filter: brightness(0.7);
+}
+
+/* Scrollbar styling */
+.gallery-container::-webkit-scrollbar {
+  height: 10px;
+}
+.gallery-container::-webkit-scrollbar-track {
+  background: #eaeaea;
+}
+.gallery-container::-webkit-scrollbar-thumb {
+  background-color: #c7d5c3;
+  border-radius: 6px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  header p {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+  header button {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+  .gallery-item {
+    width: 220px;
+  }
+  .gallery-item img {
+    height: 140px;
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    margin: 5px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  nav {
+    padding: 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav a {
+    margin: 5px 0;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+
+      <li><a href="#volunteer">Volunteer</a></li>
+      <li><a href="contact.html">Contact</a></li>
+            <li><a href="food.html">Food Program</a></li>
+
+    </ul>
+  </nav>
+  
+<!-- Education Rallies Section -->
+<section style="padding-top: 50px;">
+  <h2 style="text-align: center; font-size: 2rem; color: #2d6a4f; margin-bottom: 1rem;">Educational Rallies & Drives</h2>
+
+  <div class="gallery-container" id="education-gallery">
+    <div class="gallery-item active">
+      <img src="edu1.png">
+      <div class="caption"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="edu2.png" >
+      <div class="caption"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="edu3.png" >
+      <div class="caption"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="edu4.jpg" >
+      <div class="caption"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="edu5.jpeg">
+      <div class="caption"></div>
+    </div>
+  </div>
+
+  <p style="font-size: 1.125rem; line-height: 1.75rem; max-width: 800px; margin: 30px auto 60px auto; text-align: center;">
+    <span style="color: #fbbf24; font-weight: 600;">Project Annadatri</span> also actively engages in 
+    <span style="color: #fbbf24; font-weight: 600;">education and awareness campaigns</span> across Delhi NCR. Through rallies, interactive sessions, and material distribution,
+    our volunteers aim to bridge educational gaps in underserved communities. These initiatives empower 
+    <span style="color: #fbbf24; font-weight: 600;">children</span>, raise awareness about hygiene and nutrition, and encourage 
+    <span style="color: #fbbf24; font-weight: 600;">continued learning</span> among youth. With a focus on dignity and long-term upliftment, 
+    Annadatri’s educational efforts are lighting the path for a brighter, informed future.
+  </p>
+</section>
+
+
+
+<script>
+  const eduGallery = document.getElementById('education-gallery');
+  const eduItems = eduGallery.querySelectorAll('.gallery-item');
+
+  function updateActiveEduItem() {
+    const galleryRect = eduGallery.getBoundingClientRect();
+    let closestItem = null;
+    let closestDistance = Infinity;
+
+    eduItems.forEach(item => {
+      const itemRect = item.getBoundingClientRect();
+      const itemCenter = itemRect.left + itemRect.width / 2;
+      const galleryCenter = galleryRect.left + galleryRect.width / 2;
+      const distance = Math.abs(galleryCenter - itemCenter);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestItem = item;
+      }
+    });
+
+    eduItems.forEach(item => item.classList.remove('active'));
+    if (closestItem) closestItem.classList.add('active');
+  }
+
+  eduGallery.addEventListener('scroll', () => {
+    requestAnimationFrame(updateActiveEduItem);
+  });
+
+  // Initialize on load
+  window.onload = () => {
+    updateActiveItem();
+    updateActiveEduItem();
+  };
+</script>
+
+
+</body>
+</html>

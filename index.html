@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Annadtri - Combating Malnourishment</title>
+    <style>
+        :root {
+            --primary-color: #0d6153;
+            --secondary-color: #f5c242;
+            --light-bg: #f5f5f5;
+            --text-color: #333;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--white);
+            margin-left: 5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .login-btn {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #e0b43a;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 5%;
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            width: 50%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--secondary-color);
+        }
+        
+        .hero p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: 10%;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 10px solid rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e0b43a;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border: 1px solid var(--white);
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-secondary i {
+            margin-right: 8px;
+        }
+        
+        .donate-btn {
+            position: absolute;
+            bottom: 3rem;
+            right: 5%;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+        
+        .donate-btn:hover {
+            background-color: #e0b43a;
+        }
+        
+        .donate-btn i {
+            margin-left: 10px;
+        }
+        
+        /* Trust Section */
+        .trust-section {
+            padding: 2rem 5%;
+            background-color: var(--white);
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .trust-text {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .trust-text span {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .partners {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .partner {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .partner img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        
+        /* About Section */
+        .about-section {
+            padding: 5rem 5%;
+            display: flex;
+            gap: 5rem;
+            align-items: center;
+        }
+        
+        .about-content {
+            flex: 1;
+        }
+        
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .about-features {
+            margin-top: 2rem;
+        }
+        
+        .feature-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-item:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1rem;
+            margin-right: 0.5rem;
+        }
+        
+        .about-gallery {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 1rem;
+            position: relative;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1/3;
+        }
+        
+        .gallery-item:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        
+        .gallery-item:nth-child(3) {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        
+        /* Services Section */
+        .services-section {
+            padding: 5rem 5%;
+            background-color: var(--white);
+        }
+        
+        .section-header {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-header p {
+            color: #666;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: var(--light-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-icon img {
+            width: 30px;
+            height: 30px;
+            filter: invert(1);
+        }
+        
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .service-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        /* Events Section */
+        .events-section {
+            padding: 5rem 5%;
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .events-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .events-navigation {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .nav-btn {
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .event-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .event-image {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .event-content {
+            flex: 1;
+        }
+        
+        .event-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 1rem;
+        }
+        
+        .event-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .event-description {
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+        
+        .read-more {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .read-more:after {
+            content: "→";
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .read-more:hover:after {
+            transform: translateX(3px);
+        }
+        
+        /* Stories Section */
+        .stories-section {
+            padding: 5rem 5%;
+            background-color: var(--white);
+        }
+        
+        .stories-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .story-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        
+        
+       .story-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top; /* 👈 this keeps the top of the image in focus */
+  transition: transform 0.3s ease-in-out;
+  display: block;
+}
+
+        
+        .story-card:hover .story-image img {
+            transform: scale(1.05);
+        }
+        
+        .story-content {
+            padding: 1.5rem;
+        }
+        
+        .story-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .story-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 5%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-content p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--white);
+            padding: 3rem 5% 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .subscribe-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .subscribe-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .subscribe-btn {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        
+        /* Social Media Icons */
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        /* Decorative Elements */
+        .dots-decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: radial-gradient(circle, var(--secondary-color) 1px, transparent 1px);
+            background-size: 10px 10px;
+            opacity: 0.2;
+        }
+        
+        .top-left-dots {
+            top: 10%;
+            left: 2%;
+        }
+        
+        .bottom-right-dots {
+            bottom: 10%;
+            right: 2%;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-content {
+                width: 60%;
+            }
+            
+            .hero-image {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .about-section {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .event-card {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav {
+                margin-top: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.7rem;
+            }
+            
+            .hero {
+                text-align: center;
+                padding-top: 2rem;
+                padding-bottom: 8rem;
+            }
+            
+            .hero-content {
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-image {
+                position: relative;
+                margin: 3rem auto 0;
+                width: 250px;
+                height: 250px;
+            }
+            
+            .cta-buttons {
+                justify-content: center;
+            }
+            
+            .donate-btn {
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .service-card,
+            .story-card {
+                padding: 1.5rem;
+            }
+            
+            .partners {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo">
+            Project <span>Annadtri</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#programs">Our Programs</a></li>
+                <li><a href="https://forms.gle/LNG5nXBr5MqG7yoM9">Volunteer</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+       
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="dots-decoration top-left-dots"></div>
+        <div class="hero-content">
+            <h1>Fighting <span>Malnutrition</span> One Meal at a Time</h1>
+            <p>Project Annadtri is a student initiative, committed to ending malnutrition through sustainable food programs, education, and community empowerment initiatives.</p>
+            <div class="cta-buttons">
+                <a href="#programs" class="btn-primary">Get Started</a>
+                <a href="working.html" class="btn-secondary"><i>▶</i> How it Works</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="logo.png" alt="Volunteers helping distribute food">
+        </div>
+        <button class="donate-btn">Donate Now <i>→</i></button>
+        <div class="dots-decoration bottom-right-dots"></div>
+    </section>
+
+    <!-- Trust Section -->
+    
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-content">
+            <h2>We fight malnutrition with your support!</h2>
+            <p>Here’s a version incorporating that:
+
+<p> Projet Annadatri was founded in 2025, Anusha took the lead to startthe effort, tackling nutrition challenges across all age groups in vulnerable communities.</p>
+<p>Our approach combines immediate food aid with long-term sustainability programs, nutrition education, and community empowerment initiatives that create lasting change.</p>
+
+
+            <div class="about-features">
+                <div class="feature-item">Nutritionally balanced meal programs</div>
+                <div class="feature-item">Sustainable farming initiatives</div>
+                <div class="feature-item">Nutrition education and awareness</div>
+            </div>
+            <div class="cta-buttons" style="margin-top: 2rem;">
+                <a href="#programs" class="btn-primary">Learn More</a>
+            </div>
+        </div>
+        <div class="about-gallery">
+            <div class="gallery-item">
+                <img src="community kitchen.png" alt="Community kitchen">
+            </div>
+            <div class="gallery-item">
+                <img src="learning.png" alt="Children learning about nutrition">
+            </div>
+            <div class="gallery-item">
+                <img src="farming.png" alt="Sustainable farming">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="programs">
+        <div class="section-header">
+            <h2>Our Programs</h2>
+            <p>We are providing comprehensive solutions to combat malnutrition</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <img src="food-icon.svg" alt="Food icon" width="50" height="50"> 
+
+                </div>
+                <h3>Healthy Food</h3>
+                <p>Providing nutritionally balanced meals and food packages to vulnerable communities with emphasis on locally-sourced ingredients.</p>
+                <a href="food.html" class="read-more">Learn More</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <img src="education.svg" alt="Education icon">
+                </div>
+                <h3>Nutrition Education</h3>
+                <p>Teaching communities about balanced diets, food preparation, and making healthy choices with limited resources.</p>
+                <a href="edu.html" class="read-more">Learn More</a>
+            </div>
+            
+    </section>
+
+    <!-- Events Section -->
+    <section class="events-section">
+        <div class="events-header">
+            <div>
+                <h2>Our Exclusive Programs</h2>
+                <p>We are always providing support where it's needed most</p>
+            </div>
+            <div class="events-navigation">
+                <div class="nav-btn">←</div>
+                <div class="nav-btn">→</div>
+            </div>
+        </div>
+        <div class="event-card">
+            <div class="event-image">
+                <img src="/api/placeholder/500/300" alt="Community feeding program">
+            </div>
+            <div class="event-content">
+                <div class="event-number">01</div>
+                <h3 class="event-title">Writing Competition</h3>
+                <p class="event-description">.🌾 Annadatri Writing Competition: "Seeds of Change: Writing Against Hunger" invites young minds to express their thoughts, stories, and solutions around hunger and food insecurity. Through poetry, essays, or short stories, participants will raise awareness and inspire change. Let your words nourish hope and become a voice for the unheard.
+</p>
+                <a href="https://docs.google.com/document/d/1jkfX3wOBG4sB_4zznF3d5j-RFE4WO-N56L0eVEm4uT0/edit?usp=sharing" class="read-more">Read More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stories Section -->
+    <section class="stories-section">
+        <div class="stories-header">
+            <div>
+                <h2>Meet The People Behind It</h2>
+                <p>The core of the Project</p>
+            </div>
+            <div class="events-navigation">
+                <div class="nav-btn">←</div>
+                <div class="nav-btn">→</div>
+            </div>
+        </div>
+        <div class="stories-grid">
+            <div class="story-card">
+                <div class="story-image">
+                    <img src="anusha.jpg" alt="Anusha" class="object-cover object-top h-64 w-full rounded-t-lg" />
+                </div>
+                <div class="story-content">
+                    <h3> Anusha : Founder</h3>
+                    <p>Anusha started Annadatri at 15 to tackle food waste and hunger. She works hard to connect with NGOs and coordinate efforts to make a real impact.
+</p>
+                    <a href="https://linktr.ee/_anusha" class="read-more">Connect</a>
+                </div>
+            </div>
+            <div class="story-card">
+                <div class="story-image">
+              <img src="supratik.png" alt="Supratik" class="object-cover object-top h-64 w-full rounded-t-lg" />
+                </div>
+                <div class="story-content">
+                    <h3>Supratik Sharma: Marketing Head </h3>
+                    <p>
+Supratik leads the buzz at Annadatri. At 17, he’s the brain behind our campaigns—spreading the word, building our vibe, and getting people excited to join the mission.
+</p>
+                    <a href="https://linktr.ee/_supratik" class="read-more"> Connect</a>
+                </div>
+            </div>
+            <div class="story-card max-w-sm rounded-lg overflow-hidden shadow-lg bg-white">
+  <div class="story-image">
+    <img src="mohhika.png" alt="Mohhika" class="object-cover object-top h-64 w-full rounded-t-lg" />
+  </div>
+  <div class="story-content p-4">
+    <h3 class="text-green-800 font-bold text-lg mb-2">Mohhika: Volunteering Head</h3>
+    <p class="text-gray-700">
+      Mohhika’s the go-to for rallying our amazing volunteers. At 15, she’s all about organizing, motivating, and making sure everyone’s pumped to help out!
+    </p>
+    <a href="#" class="read-more text-yellow-500 font-semibold mt-3 inline-block hover:underline">Read More →</a>
+  </div>
+</div>
+
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="volunteer">
+        <div class="cta-content">
+            <h2>Join Our Mission to End Malnutrition</h2>
+            <p>Your time, skills, and support can make a real difference in the fight against malnutrition. Join our volunteer network or donate to help us reach more communities.</p>
+            <div class="cta-buttons">
+                <a href="https://forms.gle/LNG5nXBr5MqG7yoM9" class="btn-primary">Volunteer Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="logo">
+                    Project <span>Annadtri</span>
+                </div>
+               <p style="color: #666; margin-top: 1rem;">Working together to create a world where no one suffers from malnutrition or hunger.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="https://www.instagram.com/project.annadatri?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="social-icon">ig</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#programs">Our Programs</a></li>
+                    <li><a href="https://forms.gle/LNG5nXBr5MqG7yoM9">Volunteer</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Our Programs</h3>
+                <ul class="footer-links">
+                    <li><a href="food.html">Community Feeding</a></li>
+                    <li><a href="edu.html">Nutrition Education</a></li>
+                   
+                </ul>
+            </div>
+            
+        </div>
+        <div class="copyright">
+            © 2025 Project Annadtri. All rights reserved. | <a href="#" style="color: #666;">Privacy Policy</a> | <a href="#" style="color: #666;">Terms of Service</a>
+        </div>
+    </footer>
+
+    <!-- Add Font Awesome for icons (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="https://embed.ycb.me"
+	async="true"
+	data-domain="projectannadatriannadatri"
+	data-type="button-floating"
+	data-buttonicon="calendar"
+	data-buttonposition="bottomRight"
+	data-buttoncolor="#0c2314"
+	data-displaymode="auto"></script>
+</body>
+</html>
