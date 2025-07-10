@@ -831,14 +831,14 @@
     </nav>
 
     <div class="main-container">
-        <!-- Dashboard Page -->
+     
         <div id="dashboard-page" class="page active">
             <div class="page-header">
                 <h1 class="page-title">🍽️ Ahaarvritti Dashboard</h1>
                 <p class="page-subtitle">Connecting restaurants with food banks to reduce waste and feed communities</p>
             </div>
 
-            <!-- About Ahaarvritti Section -->
+  
             <div class="about-section">
                 <h2 class="about-title">🌟 What is Ahaarvritti?</h2>
                 <div class="about-content">
@@ -934,7 +934,7 @@
             </div>
         </div>
 
-        <!-- Donation Form Page -->
+  
         <div id="donation-page" class="page hidden">
             <div class="form-container" style="display: block;">
                 <h2 class="form-title">➕ Add New Donation</h2>
@@ -1022,7 +1022,7 @@
             </div>
         </div>
 
-        <!-- Food Banks Page -->
+
         <div id="foodbanks-page" class="page hidden">
             <div class="form-container" style="display: block;">
                 <h2 class="form-title">🏪 Food Banks Directory</h2>
@@ -1157,8 +1157,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Contact Page -->
         <div id="contact-page" class="page hidden">
             <div class="form-container" style="display: block;">
                 <h2 class="form-title">📧 Contact Us</h2>
@@ -1207,7 +1205,7 @@
                     </div>
                 </div>
 
-                <!-- Quick Contact Form -->
+              
                 <div style="margin-top: 3rem; text-align: center;">
                     <h3 style="color: #4caf50; margin-bottom: 1rem;">Quick Contact</h3>
                     <p style="color: #a5d6a7; margin-bottom: 2rem;">
@@ -1231,7 +1229,6 @@
    let donationChart, foodTypeChart;
 let donationData = [];
 
-// Initialize charts when dashboard is loaded
 function initializeCharts() {
     const ctx1 = document.getElementById('donationChart');
     const ctx2 = document.getElementById('foodTypeChart');
@@ -1308,7 +1305,7 @@ function initializeCharts() {
     }
 }
 
-// Navigation functionality
+
 function setupNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     const pages = document.querySelectorAll('.page');
@@ -1318,11 +1315,11 @@ function setupNavigation() {
             e.preventDefault();
             const targetPage = link.getAttribute('data-page');
             
-            // Update active nav link
+         
             navLinks.forEach(nav => nav.classList.remove('active'));
             link.classList.add('active');
             
-            // Show target page
+     
             pages.forEach(page => {
                 page.classList.add('hidden');
                 page.style.display = 'none';
@@ -1333,7 +1330,7 @@ function setupNavigation() {
                 targetPageElement.classList.remove('hidden');
                 targetPageElement.style.display = 'block';
                 
-                // Initialize charts if switching to dashboard
+               
                 if (targetPage === 'dashboard') {
                     setTimeout(initializeCharts, 100);
                 }
@@ -1342,7 +1339,7 @@ function setupNavigation() {
     });
 }
 
-// Form handling
+
 function setupForms() {
     const donationForm = document.getElementById('donationForm');
     const successMessage = document.getElementById('successMessage');
@@ -1351,35 +1348,35 @@ function setupForms() {
         donationForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Get form data
+  
             const formData = new FormData(donationForm);
             const donation = {};
             formData.forEach((value, key) => {
                 donation[key] = value;
             });
             
-            // Add timestamp
+
             donation.timestamp = new Date();
             
-            // Store donation (in real app, this would be sent to server)
+        
             donationData.push(donation);
             
-            // Show success message
+
             successMessage.style.display = 'block';
             donationForm.reset();
             
-            // Update dashboard stats
+         
             updateDashboardStats();
             
-            // Show contact options for food bank
+            
             showContactChoice(donation);
             
-            // Hide success message after 5 seconds
+
             setTimeout(() => {
                 successMessage.style.display = 'none';
             }, 5000);
             
-            // Auto-navigate back to dashboard after 3 seconds
+         
             setTimeout(() => {
                 document.querySelector('.nav-link[data-page="dashboard"]').click();
             }, 3000);
@@ -1387,9 +1384,9 @@ function setupForms() {
     }
 }
 
-// Show contact choice modal
+
 function showContactChoice(donation) {
-    // Get food bank details
+
     const foodBankEmails = {
         'hope-foundation': 'hope.foundation@ahaarvritti.com',
         'seva-trust': 'seva.trust@ahaarvritti.com',
@@ -1415,16 +1412,16 @@ function showContactChoice(donation) {
     const foodBankName = foodBankNames[donation.foodBank] || 'Food Bank';
     const whatsappNumber = foodBankWhatsApp[donation.foodBank] || '919463936099';
     
-    // Format messages
+
     const subject = `New Food Donation - ${donation.restaurantName}`;
     const emailBody = formatEmailBody(donation, foodBankName);
     const whatsappMessage = formatWhatsAppMessage(donation, foodBankName);
     
-    // Create links
+
     const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
     const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
     
-    // Create modal
+
     const modal = document.createElement('div');
     modal.className = 'contact-choice-modal';
     modal.innerHTML = `
@@ -1464,7 +1461,7 @@ function showContactChoice(donation) {
         </div>
     `;
     
-    // Add modal styles
+
     if (!document.getElementById('contact-choice-styles')) {
         const style = document.createElement('style');
         style.id = 'contact-choice-styles';
@@ -1592,7 +1589,7 @@ function showContactChoice(donation) {
     document.body.appendChild(modal);
 }
 
-// Contact choice functions
+
 function sendEmailChoice(mailtoLink) {
     try {
         window.open(mailtoLink, '_blank');
@@ -1616,14 +1613,14 @@ function sendWhatsAppChoice(whatsappLink) {
 }
 
 function sendBothChoice(mailtoLink, whatsappLink) {
-    // Send email first
+    
     try {
         window.open(mailtoLink, '_blank');
     } catch (error) {
         console.error('Failed to open email client:', error);
     }
     
-    // Send WhatsApp after a short delay
+   
     setTimeout(() => {
         try {
             window.open(whatsappLink, '_blank');
@@ -1643,7 +1640,7 @@ function closeContactModal() {
     }
 }
 
-// Format WhatsApp message
+
 function formatWhatsAppMessage(donation, foodBankName) {
     const date = new Date().toLocaleDateString('en-US', {
         weekday: 'long',
@@ -1686,7 +1683,7 @@ Best regards,
 Ahaarvritti Team`;
 }
 
-// Format email body
+
 function formatEmailBody(donation, foodBankName) {
     const date = new Date().toLocaleDateString('en-US', {
         weekday: 'long',
@@ -1733,9 +1730,9 @@ Ahaarvritti Team
 This is an automated notification from the Ahaarvritti food donation platform.`;
 }
 
-// Show notification
+
 function showEmailNotification(message) {
-    // Create notification element
+   
     const notification = document.createElement('div');
     notification.className = 'email-notification';
     notification.innerHTML = `
@@ -1749,7 +1746,7 @@ function showEmailNotification(message) {
         </div>
     `;
     
-    // Add notification styles
+   
     if (!document.getElementById('email-notification-styles')) {
         const style = document.createElement('style');
         style.id = 'email-notification-styles';
@@ -1821,7 +1818,7 @@ function showEmailNotification(message) {
     
     document.body.appendChild(notification);
     
-    // Auto-remove after 5 seconds
+    
     setTimeout(() => {
         if (notification.parentElement) {
             notification.remove();
@@ -1829,7 +1826,7 @@ function showEmailNotification(message) {
     }, 5000);
 }
 
-// Update dashboard statistics
+
 function updateDashboardStats() {
     const totalDonations = document.querySelector('.stat-card:nth-child(1) .stat-value');
     const totalMeals = document.querySelector('.stat-card:nth-child(2) .stat-value');
@@ -1847,7 +1844,7 @@ function updateDashboardStats() {
     }
 }
 
-// Set minimum dates for form inputs
+
 function setupDateInputs() {
     const today = new Date();
     const tomorrow = new Date(today);
@@ -1865,7 +1862,7 @@ function setupDateInputs() {
     }
 }
 
-// Add fade-in animation to elements when they come into view
+
 function setupAnimations() {
     const observerOptions = {
         threshold: 0.1,
@@ -1881,7 +1878,6 @@ function setupAnimations() {
         });
     }, observerOptions);
     
-    // Observe all fade-in elements
     document.querySelectorAll('.fade-in').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
@@ -1890,9 +1886,9 @@ function setupAnimations() {
     });
 }
 
-// Add interactive effects
+
 function setupInteractiveEffects() {
-    // Add hover effect to cards
+
     const cards = document.querySelectorAll('.stat-card, .donation-item, .contact-card');
     cards.forEach(card => {
         card.addEventListener('mouseenter', () => {
@@ -1904,7 +1900,7 @@ function setupInteractiveEffects() {
         });
     });
     
-    // Add click ripple effect to buttons
+
     const buttons = document.querySelectorAll('.btn');
     buttons.forEach(button => {
         button.addEventListener('click', (e) => {
@@ -1928,7 +1924,7 @@ function setupInteractiveEffects() {
     });
 }
 
-// Add CSS for ripple effect
+
 function addRippleCSS() {
     const style = document.createElement('style');
     style.textContent = `
@@ -1956,7 +1952,7 @@ function addRippleCSS() {
     document.head.appendChild(style);
 }
 
-// Initialize the application
+
 document.addEventListener('DOMContentLoaded', () => {
     setupNavigation();
     setupForms();
@@ -1965,10 +1961,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupInteractiveEffects();
     addRippleCSS();
     
-    // Initialize charts for dashboard
+
     setTimeout(initializeCharts, 500);
     
-    // Add some demo data
+ 
     donationData = [
         {
             restaurantName: "Green Garden Restaurant",
