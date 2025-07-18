@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahaarvritti - Calendar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #06372f 0%, #0a4a3f 50%, #06372f 100%);
+            color: #e8f5e8;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(6, 55, 47, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4caf50;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e8f5e8;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: rgba(6, 55, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+        }
+
+        .month-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            color: #66bb6a;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(76, 175, 80, 0.3);
+            transform: scale(1.05);
+        }
+
+        .current-month {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4caf50;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .calendar-legend {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .calendar-container {
+            background: rgba(6, 55, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #66bb6a, #81c784, #a5d6a7);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            background: rgba(46, 125, 50, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .calendar-header {
+            background: linear-gradient(135deg, #2e7d32, #388e3c);
+            padding: 1.2rem;
+            text-align: center;
+            font-weight: bold;
+            color: #e8f5e8;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .calendar-day {
+            background: rgba(6, 55, 47, 0.4);
+            padding: 1.2rem;
+            min-height: 120px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .calendar-day:hover {
+            background: rgba(76, 175, 80, 0.15);
+            border-color: rgba(76, 175, 80, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.4;
+            background: rgba(6, 55, 47, 0.2);
+        }
+
+        .calendar-day.today {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(102, 187, 106, 0.2));
+            border: 2px solid #4caf50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            color: #e8f5e8;
+            font-size: 1.1rem;
+            text-align: center;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.8rem auto;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .calendar-day.today .day-number {
+            background: #4caf50;
+            color: #06372f;
+            font-weight: 700;
+        }
+
+        .donation-indicators {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            margin-top: auto;
+        }
+
+        .donation-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .donation-indicator:hover {
+            transform: scale(1.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .donation-pickup { 
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+        .donation-scheduled { 
+            background: linear-gradient(135deg, #ff9800, #ffb74d);
+            box-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
+        }
+        .donation-completed { 
+            background: linear-gradient(135deg, #66bb6a, #81c784);
+            box-shadow: 0 0 10px rgba(102, 187, 106, 0.5);
+        }
+
+        .donation-details {
+            background: rgba(6, 55, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .donation-details::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #66bb6a, #81c784, #a5d6a7);
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .details-title {
+            color: #4caf50;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .selected-date {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            color: #4caf50;
+            font-weight: 600;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .donation-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .donation-card {
+            background: rgba(10, 74, 63, 0.4);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border-left: 5px solid #4caf50;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4caf50, #66bb6a);
+        }
+
+        .donation-card:hover {
+            transform: translateX(8px);
+            border-left-color: #66bb6a;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+        }
+
+        .donation-restaurant {
+            color: #4caf50;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .donation-info {
+            color: #c8e6c9;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .donation-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pickup {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(102, 187, 106, 0.2));
+            color: #4caf50;
+            border: 1px solid rgba(76, 175, 80, 0.4);
+        }
+
+        .status-scheduled {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.3), rgba(255, 183, 77, 0.2));
+            color: #ff9800;
+            border: 1px solid rgba(255, 152, 0, 0.4);
+        }
+
+        .status-completed {
+            background: linear-gradient(135deg, rgba(102, 187, 106, 0.3), rgba(129, 199, 132, 0.2));
+            color: #66bb6a;
+            border: 1px solid rgba(102, 187, 106, 0.4);
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(6, 55, 47, 0.95);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            max-width: 200px;
+            text-align: center;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        .tooltip::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid rgba(76, 175, 80, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .calendar-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .calendar-legend {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .calendar-day {
+                min-height: 80px;
+                padding: 0.8rem;
+            }
+            
+            .day-number {
+                width: 25px;
+                height: 25px;
+                font-size: 0.9rem;
+            }
+            
+            .donation-indicator {
+                width: 8px;
+                height: 8px;
+            }
+            
+            .details-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .donation-card {
+                padding: 1rem;
+            }
+            
+            .donation-restaurant {
+                font-size: 1.1rem;
+            }
+            
+            .donation-info {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 0 1rem;
+            }
+            
+            .calendar-container {
+                padding: 1rem;
+            }
+            
+            .calendar-day {
+                min-height: 70px;
+                padding: 0.5rem;
+            }
+            
+            .day-number {
+                width: 20px;
+                height: 20px;
+                font-size: 0.8rem;
+            }
+            
+            .donation-indicator {
+                width: 6px;
+                height: 6px;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Enhanced animations */
+        .calendar-day:nth-child(1) { animation-delay: 0.1s; }
+        .calendar-day:nth-child(2) { animation-delay: 0.2s; }
+        .calendar-day:nth-child(3) { animation-delay: 0.3s; }
+        .calendar-day:nth-child(4) { animation-delay: 0.4s; }
+        .calendar-day:nth-child(5) { animation-delay: 0.5s; }
+        .calendar-day:nth-child(6) { animation-delay: 0.6s; }
+        .calendar-day:nth-child(7) { animation-delay: 0.7s; }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* Loading state for calendar */
+        .calendar-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            color: #66bb6a;
+            font-size: 1.2rem;
+        }
+
+        .calendar-loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #66bb6a;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <div class="logo-icon">🍽️</div>
+                <span>Ahaarvritti</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="dashboard.html">Add Donation</a></li>
+                <li><a href="calendar.html" class="active">Calendar</a></li>
+                <li><a href="javascript:showFoodBanks()">Food Banks</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="page-header fade-in">
+            <h1 class="page-title">📅 Donation Calendar</h1>
+            <p class="page-subtitle">Track pickup schedules and donation history</p>
+        </div>
+
+        <div class="calendar-controls fade-in">
+            <div class="month-nav">
+                <button class="nav-btn" onclick="previousMonth()">← Previous</button>
+                <div class="current-month" id="currentMonth">June 2025</div>
+                <button class="nav-btn" onclick="nextMonth()">Next →</button>
+            </div>
+            <div class="calendar-legend">
+                <div class="legend-item">
+                    <div class="legend-dot donation-pickup"></div>
+                    <span>Pickup Today</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot donation-scheduled"></div>
+                    <span>Scheduled</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot donation-completed"></div>
+                    <span>Completed</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="calendar-container fade-in">
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="donation-details fade-in">
+            <div class="details-header">
+                <h3 class="details-title">Today's Donations</h3>
+                <span class="selected-date" id="selectedDate">June 22, 2025</span>
+            </div>
+            <div class="donation-list" id="donationList">
+                <div class="donation-card">
+                    <div class="donation-restaurant">Green Garden Restaurant</div>
+                    <div class="donation-info">🥗 Fresh vegetables & fruits • 25 kg</div>
+                    <div class="donation-info">📍 Pickup: 2:00 PM - 4:00 PM</div>
+                    <div class="donation-info">🏪 Destination: Hope Foundation</div>
+                    <span class="donation-status status-pickup">Pickup Today</span>
+                </div>
+                <div class="donation-card">
+                    <div class="donation-restaurant">Spice Junction</div>
+                    <div class="donation-info">🍛 Prepared meals • 40 portions</div>
+                    <div class="donation-info">📍 Pickup: 6:00 PM - 8:00 PM</div>
+                    <div class="donation-info">🏪 Destination: Seva Trust</div>
+                    <span class="donation-status status-scheduled">Scheduled</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        let currentDate = new Date();
+        const today = new Date();
+
+        const donations = {
+            '2025-06-22': [
+                { restaurant: 'Green Garden Restaurant', type: 'Fresh vegetables', status: 'pickup', time: '2:00 PM' },
+                { restaurant: 'Spice Junction', type: 'Prepared meals', status: 'scheduled', time: '6:00 PM' }
+            ],
+            '2025-06-23': [
+                { restaurant: 'Cafe Aroma', type: 'Baked goods', status: 'scheduled', time: '10:00 AM' }
+            ],
+            '2025-06-20': [
+                { restaurant: 'Dosa Corner', type: 'South Indian meals', status: 'completed', time: '7:00 PM' }
+            ],
+            '2025-06-18': [
+                { restaurant: 'Pizza Palace', type: 'Fresh pizzas', status: 'completed', time: '9:00 PM' }
+            ]
+        };
+
+        function generateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            document.getElementById('currentMonth').textContent = 
+                currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            // Add headers
+            const headers = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            headers.forEach(header => {
+                const headerCell = document.createElement('div');
+                headerCell.className = 'calendar-header';
+                headerCell.textContent = header;
+                calendarGrid.appendChild(headerCell);
+            });
+
+            // Add days
+            for (let i = 0; i < 42; i++) {
+                const cellDate = new Date(startDate);
+                cellDate.setDate(startDate.getDate() + i);
+                
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+                
+                if (cellDate.getMonth() !== month) {
+                    dayCell.classList.add('other-month');
+                }
+                
+                if (cellDate.toDateString() === today.toDateString()) {
+                    dayCell.classList.add('today');
+                }
+
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = cellDate.getDate();
+                dayCell.appendChild(dayNumber);
+
+                const dateKey = cellDate.toISOString().split('T')[0];
+                if (donations[dateKey]) {
+                    const indicatorsContainer = document.createElement('div');
+                    indicatorsContainer.className = 'donation-indicators';
+                    
+                    donations[dateKey].forEach(donation => {
+                        const indicator = document.createElement('div');
+                        indicator.className = `donation-indicator donation-${donation.status}`;
+                        indicatorsContainer.appendChild(indicator);
+                    });
+                    
+                    dayCell.appendChild(indicatorsContainer);
+                }
+
+                dayCell.addEventListener('click', () => selectDate(cellDate));
+                dayCell.addEventListener('mouseenter', (e) => showTooltip(e, cellDate, dateKey));
+                dayCell.addEventListener('mouseleave', hideTooltip);
+
+                calendarGrid.appendChild(dayCell);
+            }
+        }
+
+        function selectDate(date) {
+            const dateKey = date.toISOString().split('T')[0];
+            const selectedDateSpan = document.getElementById('selectedDate');
+            selectedDateSpan.textContent = date.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+
+            const donationList = document.getElementById('donationList');
+            donationList.innerHTML = '';
+
+            if (donations[dateKey]) {
+                donations[dateKey].forEach(donation => {
+                    const card = document.createElement('div');
+                    card.className = 'donation-card';
+                    
+                    // Get food type emoji
+                    const foodTypeEmojis = {
+                        'prepared': '🍛',
+                        'fresh': '🥗',
+                        'baked': '🥖',
+                        'dairy': '🥛',
+                        'packaged': '📦'
+                    };
+                    
+                    const foodEmoji = foodTypeEmojis[donation.type] || '🍽️';
+                    
+                    card.innerHTML = `
+                        <div class="donation-restaurant">${donation.restaurant}</div>
+                        <div class="donation-info">${foodEmoji} ${donation.type} • ${donation.time}</div>
+                        <div class="donation-info">📍 Pickup: ${donation.time}</div>
+                        <div class="donation-info">🏪 Destination: ${getFoodBankName(donation.foodBank)}</div>
+                        <span class="donation-status status-${donation.status}">
+                            ${getStatusText(donation.status)}
+                        </span>
+                    `;
+                    donationList.appendChild(card);
+                });
+            } else {
+                donationList.innerHTML = '<p style="color: #a5d6a7; text-align: center; padding: 2rem; font-size: 1.1rem;">No donations scheduled for this date</p>';
+            }
+        }
+
+        function getFoodBankName(foodBankKey) {
+            const foodBankNames = {
+                'hope-foundation': 'Hope Foundation',
+                'seva-trust': 'Seva Trust',
+                'annapurna': 'Annapurna Food Bank',
+                'helping-hands': 'Helping Hands'
+            };
+            return foodBankNames[foodBankKey] || 'Food Bank';
+        }
+
+        function getStatusText(status) {
+            const statusTexts = {
+                'pickup': 'Pickup Today',
+                'scheduled': 'Scheduled',
+                'completed': 'Completed'
+            };
+            return statusTexts[status] || status.charAt(0).toUpperCase() + status.slice(1);
+        }
+
+        function showTooltip(e, date, dateKey) {
+            const tooltip = document.getElementById('tooltip');
+            if (donations[dateKey]) {
+                const donationCount = donations[dateKey].length;
+                tooltip.innerHTML = `${donationCount} donation${donationCount > 1 ? 's' : ''} on ${date.toLocaleDateString()}`;
+                tooltip.style.left = e.pageX + 10 + 'px';
+                tooltip.style.top = e.pageY - 30 + 'px';
+                tooltip.classList.add('show');
+            }
+        }
+
+        function hideTooltip() {
+            document.getElementById('tooltip').classList.remove('show');
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar();
+        }
+
+        function showDashboard() {
+            window.history.back();
+        }
+
+        function showDonationForm() {
+            // Navigate to donation form
+        }
+
+        function showFoodBanks() {
+            // Navigate to food banks page
+        }
+
+        // Initialize calendar
+        generateCalendar();
+        selectDate(today);
+
+        // Add fade-in animation
+        document.querySelectorAll('.fade-in').forEach((el, index) => {
+            el.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>

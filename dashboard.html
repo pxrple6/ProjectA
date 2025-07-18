@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahaarvritti - Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #06372f 0%, #0a4a3f 50%, #06372f 100%);
+            color: #e8f5e8;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: rgba(6, 55, 47, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4caf50;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e8f5e8;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            color: #a5d6a7;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(6, 55, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4caf50, #66bb6a, #81c784);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(76, 175, 80, 0.5);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #a5d6a7;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-container {
+            background: rgba(6, 55, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .chart-title {
+            color: #4caf50;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .recent-donations {
+            background: rgba(6, 55, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .section-title {
+            color: #4caf50;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .donation-item {
+            background: rgba(10, 74, 63, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4caf50;
+            transition: all 0.3s ease;
+        }
+
+        .donation-item:hover {
+            transform: translateX(5px);
+            border-left-color: #66bb6a;
+            background: rgba(10, 74, 63, 0.6);
+        }
+
+        .donation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .restaurant-name {
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .donation-time {
+            color: #a5d6a7;
+            font-size: 0.9rem;
+        }
+
+        .donation-details {
+            color: #c8e6c9;
+            font-size: 0.9rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #66bb6a, #81c784);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 2px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(76, 175, 80, 0.3);
+            border-color: #4caf50;
+            transform: translateY(-2px);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .form-container {
+            background: rgba(6, 55, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #66bb6a, #81c784, #a5d6a7);
+        }
+
+        .form-title {
+            color: #4caf50;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #4caf50;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            border-radius: 12px;
+            background: rgba(10, 74, 63, 0.4);
+            color: #e8f5e8;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            background: rgba(10, 74, 63, 0.6);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #a5d6a7;
+            opacity: 0.7;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(102, 187, 106, 0.2));
+            border: 2px solid #4caf50;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            color: #4caf50;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+            animation: slideInDown 0.5s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced form styling */
+        .form-group select option {
+            background: #06372f;
+            color: #e8f5e8;
+        }
+
+        .form-group input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(0.8);
+            cursor: pointer;
+        }
+
+        .form-group input[type="tel"] {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive design for form */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Loading animation for form submission */
+        .btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .btn.loading::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Enhanced focus states */
+        .form-group input:invalid,
+        .form-group select:invalid,
+        .form-group textarea:invalid {
+            border-color: #f44336;
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+        }
+
+        .form-group input:valid,
+        .form-group select:valid,
+        .form-group textarea:valid {
+            border-color: #4caf50;
+        }
+
+        /* About Ahaarvritti Section */
+        .about-section {
+            background: rgba(6, 55, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4caf50, #66bb6a, #81c784);
+        }
+
+        .about-title {
+            color: #4caf50;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .about-content {
+            color: #c8e6c9;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: rgba(10, 74, 63, 0.4);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(76, 175, 80, 0.4);
+            background: rgba(10, 74, 63, 0.6);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            color: #4caf50;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-description {
+            color: #a5d6a7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Contact Page Styles */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-card {
+            background: rgba(10, 74, 63, 0.4);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: rgba(76, 175, 80, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-title {
+            color: #4caf50;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-details {
+            color: #c8e6c9;
+            line-height: 1.6;
+        }
+
+        .contact-details a {
+            color: #4caf50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover {
+            color: #66bb6a;
+        }
+
+        @media (max-width: 768px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Food Banks Page Styles */
+        .food-banks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .food-bank-card {
+            background: rgba(10, 74, 63, 0.4);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-bank-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4caf50, #66bb6a, #81c784);
+        }
+
+        .food-bank-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(76, 175, 80, 0.5);
+            box-shadow: 0 15px 35px rgba(76, 175, 80, 0.2);
+            background: rgba(10, 74, 63, 0.6);
+        }
+
+        .food-bank-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .food-bank-name {
+            color: #4caf50;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .food-bank-location {
+            color: #a5d6a7;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .food-bank-status {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .food-bank-status.online {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .food-bank-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .food-bank-details p {
+            color: #c8e6c9;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .food-bank-details strong {
+            color: #4caf50;
+        }
+
+        .food-bank-contact {
+            margin-top: auto;
+        }
+
+        .contact-methods {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid transparent;
+        }
+
+        .email-btn {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+
+        .email-btn:hover {
+            background: rgba(76, 175, 80, 0.3);
+            color: #66bb6a;
+            transform: translateY(-2px);
+        }
+
+        .whatsapp-btn {
+            background: rgba(37, 211, 102, 0.2);
+            color: #25d366;
+            border-color: rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            background: rgba(37, 211, 102, 0.3);
+            color: #128c7e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .phone-btn {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+
+        .phone-btn:hover {
+            background: rgba(76, 175, 80, 0.3);
+            color: #66bb6a;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive design for food banks */
+        @media (max-width: 768px) {
+            .food-banks-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .food-bank-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .contact-methods {
+                justify-content: center;
+            }
+            
+            .contact-btn {
+                flex: 1;
+                justify-content: center;
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <div class="logo-icon">🍽️</div>
+                <span>Ahaarvritti</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="donation">Add Donation</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="#" class="nav-link" data-page="foodbanks">Food Banks</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                <li><a href="index.html"> Annadatri</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-container">
+     
+        <div id="dashboard-page" class="page active">
+            <div class="page-header">
+                <h1 class="page-title">🍽️ Ahaarvritti Dashboard</h1>
+                <p class="page-subtitle">Connecting restaurants with food banks to reduce waste and feed communities</p>
+            </div>
+
+  
+            <div class="about-section">
+                <h2 class="about-title">🌟 What is Ahaarvritti?</h2>
+                <div class="about-content">
+                    <p>Ahaarvritti is a revolutionary food donation platform that bridges the gap between restaurants and food banks. Our mission is to reduce food waste while ensuring that surplus food reaches those who need it most. We connect restaurants with local food banks to create a sustainable ecosystem of food sharing.</p>
+                </div>
+                
+                <div class="about-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🍽️</div>
+                        <div class="feature-title">Food Donation</div>
+                        <div class="feature-description">Restaurants can easily donate surplus food through our streamlined platform</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚚</div>
+                        <div class="feature-title">Smart Logistics</div>
+                        <div class="feature-description">Automated pickup scheduling and real-time tracking for efficient delivery</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <div class="feature-title">Community Impact</div>
+                        <div class="feature-description">Supporting local communities by reducing hunger and food waste</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Transparency</div>
+                        <div class="feature-description">Real-time analytics and reporting for all donation activities</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">1,247</div>
+                    <div class="stat-label">Total Donations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">45,892</div>
+                    <div class="stat-label">Meals Served</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Partner Restaurants</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">Food Banks</div>
+                </div>
+            </div>
+
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h3 class="chart-title">Monthly Donations</h3>
+                    <canvas id="donationChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">Food Type Distribution</h3>
+                    <canvas id="foodTypeChart"></canvas>
+                </div>
+            </div>
+
+            <div class="recent-donations">
+                <h3 class="section-title">📋 Recent Donations</h3>
+                <div class="donation-item">
+                    <div class="donation-header">
+                        <span class="restaurant-name">Green Garden Restaurant</span>
+                        <span class="donation-time">2 hours ago</span>
+                    </div>
+                    <div class="donation-details">🥗 Fresh vegetables & fruits • 25 kg • Hope Foundation</div>
+                </div>
+                <div class="donation-item">
+                    <div class="donation-header">
+                        <span class="restaurant-name">Spice Junction</span>
+                        <span class="donation-time">4 hours ago</span>
+                    </div>
+                    <div class="donation-details">🍛 Prepared meals • 40 portions • Seva Trust</div>
+                </div>
+                <div class="donation-item">
+                    <div class="donation-header">
+                        <span class="restaurant-name">Cafe Aroma</span>
+                        <span class="donation-time">6 hours ago</span>
+                    </div>
+                    <div class="donation-details">🥖 Baked goods • 15 kg • Annapurna Food Bank</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary nav-link" data-page="donation">
+                    ➕ Add New Donation
+                </button>
+                <button class="btn btn-secondary nav-link" data-page="foodbanks">
+                    🏪 Browse Food Banks
+                </button>
+            </div>
+        </div>
+
+  
+        <div id="donation-page" class="page hidden">
+            <div class="form-container" style="display: block;">
+                <h2 class="form-title">➕ Add New Donation</h2>
+                <div class="success-message" id="successMessage">
+                    ✅ Donation submitted successfully! A food bank representative will contact you within 2 hours.
+                </div>
+                <form id="donationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="restaurantName">Restaurant Name</label>
+                            <input type="text" id="restaurantName" name="restaurantName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPerson">Contact Person</label>
+                            <input type="text" id="contactPerson" name="contactPerson" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Restaurant Address</label>
+                        <textarea id="address" name="address" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="foodType">Food Type</label>
+                            <select id="foodType" name="foodType" required>
+                                <option value="">Select food type</option>
+                                <option value="prepared">Prepared Meals</option>
+                                <option value="fresh">Fresh Produce</option>
+                                <option value="baked">Baked Goods</option>
+                                <option value="dairy">Dairy Products</option>
+                                <option value="packaged">Packaged Foods</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="text" id="quantity" name="quantity" placeholder="e.g., 25 kg, 40 portions" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="date" id="expiryDate" name="expiryDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pickupDate">Preferred Pickup Date</label>
+                            <input type="date" id="pickupDate" name="pickupDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="foodBank">Select Food Bank</label>
+                        <select id="foodBank" name="foodBank" required>
+                            <option value="">Choose a food bank</option>
+                            <option value="hope-foundation">Hope Foundation - Connaught Place</option>
+                            <option value="seva-trust">Seva Trust - Karol Bagh</option>
+                            <option value="annapurna">Annapurna Food Bank - Lajpat Nagar</option>
+                            <option value="helping-hands">Helping Hands - Dwarka</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instructions">Special Instructions</label>
+                        <textarea id="instructions" name="instructions" placeholder="Any special handling requirements or notes..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary nav-link" data-page="dashboard">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Donation</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div id="foodbanks-page" class="page hidden">
+            <div class="form-container" style="display: block;">
+                <h2 class="form-title">🏪 Food Banks Directory</h2>
+                <p style="text-align: center; color: #a5d6a7; font-size: 1.2rem; margin-bottom: 2rem;">
+                    Connect with local food banks for donations and partnerships
+                </p>
+                
+                <div class="food-banks-grid">
+                    <div class="food-bank-card">
+                        <div class="food-bank-header">
+                            <div class="food-bank-info">
+                                <h3 class="food-bank-name">Hope Foundation</h3>
+                                <p class="food-bank-location">📍 Connaught Place, New Delhi</p>
+                            </div>
+                            <div class="food-bank-status online">🟢 Online</div>
+                        </div>
+                        <div class="food-bank-details">
+                            <p><strong>Capacity:</strong> Serves 500+ meals daily</p>
+                            <p><strong>Specializes in:</strong> Prepared meals and fresh produce</p>
+                            <p><strong>Operating Hours:</strong> 6:00 AM - 10:00 PM</p>
+                            <p><strong>Accepting:</strong> All food types, especially prepared meals</p>
+                        </div>
+                        <div class="food-bank-contact">
+                            <div class="contact-methods">
+                                <a href="projectannadatri@gmail.com" class="contact-btn email-btn">
+                                    📧 Email
+                                </a>
+                                <a href="https://wa.me/919463936099?text=Hello%20Hope%20Foundation!%20I%20would%20like%20to%20donate%20food.%20Can%20you%20please%20provide%20more%20information%20about%20your%20requirements%20and%20pickup%20procedures?" 
+                                   target="_blank" class="contact-btn whatsapp-btn">
+                                    💬 WhatsApp
+                                </a>
+                                <a href="tel:+919463936099" class="contact-btn phone-btn">
+                                    📞 Call
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="food-bank-card">
+                        <div class="food-bank-header">
+                            <div class="food-bank-info">
+                                <h3 class="food-bank-name">Seva Trust</h3>
+                                <p class="food-bank-location">📍 Karol Bagh, New Delhi</p>
+                            </div>
+                            <div class="food-bank-status online">🟢 Online</div>
+                        </div>
+                        <div class="food-bank-details">
+                            <p><strong>Capacity:</strong> Community kitchen serving 300+ daily</p>
+                            <p><strong>Specializes in:</strong> All food types</p>
+                            <p><strong>Operating Hours:</strong> 24/7 Emergency Service</p>
+                            <p><strong>Accepting:</strong> All food types, emergency donations</p>
+                        </div>
+                        <div class="food-bank-contact">
+                            <div class="contact-methods">
+                                <a href="mailto:seva.trust@ahaarvritti.com" class="contact-btn email-btn">
+                                    📧 Email
+                                </a>
+                                <a href="https://wa.me/919463936099?text=Hello%20Seva%20Trust!%20I%20would%20like%20to%20donate%20food.%20Can%20you%20please%20provide%20more%20information%20about%20your%20requirements%20and%20pickup%20procedures?" 
+                                   target="_blank" class="contact-btn whatsapp-btn">
+                                    💬 WhatsApp
+                                </a>
+                                <a href="tel:+919463936099" class="contact-btn phone-btn">
+                                    📞 Call
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="food-bank-card">
+                        <div class="food-bank-header">
+                            <div class="food-bank-info">
+                                <h3 class="food-bank-name">Annapurna Food Bank</h3>
+                                <p class="food-bank-location">📍 Lajpat Nagar, New Delhi</p>
+                            </div>
+                            <div class="food-bank-status online">🟢 Online</div>
+                        </div>
+                        <div class="food-bank-details">
+                            <p><strong>Capacity:</strong> Large storage facility</p>
+                            <p><strong>Specializes in:</strong> Bulk donations and distribution</p>
+                            <p><strong>Operating Hours:</strong> 8:00 AM - 8:00 PM</p>
+                            <p><strong>Accepting:</strong> Large quantities, packaged foods</p>
+                        </div>
+                        <div class="food-bank-contact">
+                            <div class="contact-methods">
+                                <a href="mailto:annapurna@ahaarvritti.com" class="contact-btn email-btn">
+                                    📧 Email
+                                </a>
+                                <a href="https://wa.me/919463936099?text=Hello%20Annapurna%20Food%20Bank!%20I%20would%20like%20to%20donate%20food.%20Can%20you%20please%20provide%20more%20information%20about%20your%20requirements%20and%20pickup%20procedures?" 
+                                   target="_blank" class="contact-btn whatsapp-btn">
+                                    💬 WhatsApp
+                                </a>
+                                <a href="tel:+919463936099" class="contact-btn phone-btn">
+                                    📞 Call
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="food-bank-card">
+                        <div class="food-bank-header">
+                            <div class="food-bank-info">
+                                <h3 class="food-bank-name">Helping Hands</h3>
+                                <p class="food-bank-location">📍 Dwarka, New Delhi</p>
+                            </div>
+                            <div class="food-bank-status online">🟢 Online</div>
+                        </div>
+                        <div class="food-bank-details">
+                            <p><strong>Capacity:</strong> Focus on children's nutrition</p>
+                            <p><strong>Specializes in:</strong> Children's meals and nutrition</p>
+                            <p><strong>Operating Hours:</strong> 7:00 AM - 9:00 PM</p>
+                            <p><strong>Accepting:</strong> Packaged and fresh foods, children's meals</p>
+                        </div>
+                        <div class="food-bank-contact">
+                            <div class="contact-methods">
+                                <a href="mailto:helping.hands@ahaarvritti.com" class="contact-btn email-btn">
+                                    📧 Email
+                                </a>
+                                <a href="https://wa.me/919463936099?text=Hello%20Helping%20Hands!%20I%20would%20like%20to%20donate%20food.%20Can%20you%20please%20provide%20more%20information%20about%20your%20requirements%20and%20pickup%20procedures?" 
+                                   target="_blank" class="contact-btn whatsapp-btn">
+                                    💬 WhatsApp
+                                </a>
+                                <a href="tel:+919463936099" class="contact-btn phone-btn">
+                                    📞 Call
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-primary nav-link" data-page="dashboard">Back to Dashboard</button>
+                </div>
+            </div>
+        </div>
+        <div id="contact-page" class="page hidden">
+            <div class="form-container" style="display: block;">
+                <h2 class="form-title">📧 Contact Us</h2>
+                <p style="text-align: center; color: #a5d6a7; font-size: 1.2rem; margin-bottom: 2rem;">
+                    Get in touch with the Ahaarvritti team for support, partnerships, or inquiries.
+                </p>
+                
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-title">General Inquiries</div>
+                        <div class="contact-details">
+                            <a href="mailto:info@ahaarvritti.com?subject=General Inquiry&body=Hello Ahaarvritti Team,%0D%0A%0D%0AI would like to know more about...">
+                                info@ahaarvritti.com
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">🤝</div>
+                        <div class="contact-title">Partnership Opportunities</div>
+                        <div class="contact-details">
+                            <a href="mailto:partnerships@ahaarvritti.com?subject=Partnership Inquiry&body=Hello,%0D%0A%0D%0AI am interested in partnering with Ahaarvritti...">
+                                partnerships@ahaarvritti.com
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">🛠️</div>
+                        <div class="contact-title">Technical Support</div>
+                        <div class="contact-details">
+                            <a href="mailto:support@ahaarvritti.com?subject=Technical Support Request&body=Hello Support Team,%0D%0A%0D%0AI need help with...">
+                                support@ahaarvritti.com
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-title">Emergency Hotline</div>
+                        <div class="contact-details">
+                            <a href="tel:+911234567890">+91 12345 67890</a><br>
+                            <small style="color: #a5d6a7;">Available 24/7 for urgent donations</small>
+                        </div>
+                    </div>
+                </div>
+
+              
+                <div style="margin-top: 3rem; text-align: center;">
+                    <h3 style="color: #4caf50; margin-bottom: 1rem;">Quick Contact</h3>
+                    <p style="color: #a5d6a7; margin-bottom: 2rem;">
+                        Click below to open your email client with a pre-filled message
+                    </p>
+                    <a href="mailto:info@ahaarvritti.com?subject=Quick Contact from Website&body=Hello Ahaarvritti Team,%0D%0A%0D%0AName: [Your Name]%0D%0AOrganization: [Your Organization]%0D%0APhone: [Your Phone Number]%0D%0A%0D%0AMessage:%0D%0A[Please describe your inquiry here]%0D%0A%0D%0AThank you!" 
+                       class="btn btn-primary" 
+                       style="font-size: 1.1rem; padding: 15px 30px;">
+                        ✉️ Send Quick Email
+                    </a>
+                </div>
+
+                <div class="form-actions" style="margin-top: 3rem;">
+                    <button type="button" class="btn btn-secondary nav-link" data-page="dashboard">Back to Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+   let donationChart, foodTypeChart;
+let donationData = [];
+
+function initializeCharts() {
+    const ctx1 = document.getElementById('donationChart');
+    const ctx2 = document.getElementById('foodTypeChart');
+    
+    if (ctx1 && !donationChart) {
+        donationChart = new Chart(ctx1.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Donations',
+                    data: [65, 78, 90, 81, 95, 102],
+                    borderColor: '#66bb6a',
+                    backgroundColor: 'rgba(102, 187, 106, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#e8f5e8'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#a5d6a7' },
+                        grid: { color: 'rgba(165, 214, 167, 0.1)' }
+                    },
+                    y: {
+                        ticks: { color: '#a5d6a7' },
+                        grid: { color: 'rgba(165, 214, 167, 0.1)' }
+                    }
+                }
+            }
+        });
+    }
+    
+    if (ctx2 && !foodTypeChart) {
+        foodTypeChart = new Chart(ctx2.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Prepared Meals', 'Fresh Produce', 'Baked Goods', 'Dairy', 'Packaged'],
+                datasets: [{
+                    data: [35, 25, 20, 10, 10],
+                    backgroundColor: [
+                        '#4caf50',
+                        '#66bb6a',
+                        '#81c784',
+                        '#a5d6a7',
+                        '#c8e6c9'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#0a2e0a'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#e8f5e8',
+                            padding: 20
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
+
+
+function setupNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetPage = link.getAttribute('data-page');
+            
+         
+            navLinks.forEach(nav => nav.classList.remove('active'));
+            link.classList.add('active');
+            
+     
+            pages.forEach(page => {
+                page.classList.add('hidden');
+                page.style.display = 'none';
+            });
+            
+            const targetPageElement = document.getElementById(targetPage + '-page');
+            if (targetPageElement) {
+                targetPageElement.classList.remove('hidden');
+                targetPageElement.style.display = 'block';
+                
+               
+                if (targetPage === 'dashboard') {
+                    setTimeout(initializeCharts, 100);
+                }
+            }
+        });
+    });
+}
+
+
+function setupForms() {
+    const donationForm = document.getElementById('donationForm');
+    const successMessage = document.getElementById('successMessage');
+    
+    if (donationForm) {
+        donationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+  
+            const formData = new FormData(donationForm);
+            const donation = {};
+            formData.forEach((value, key) => {
+                donation[key] = value;
+            });
+            
+
+            donation.timestamp = new Date();
+            
+        
+            donationData.push(donation);
+            
+
+            successMessage.style.display = 'block';
+            donationForm.reset();
+            
+         
+            updateDashboardStats();
+            
+            
+            showContactChoice(donation);
+            
+
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+            
+         
+            setTimeout(() => {
+                document.querySelector('.nav-link[data-page="dashboard"]').click();
+            }, 3000);
+        });
+    }
+}
+
+
+function showContactChoice(donation) {
+
+    const foodBankEmails = {
+        'hope-foundation': 'hope.foundation@ahaarvritti.com',
+        'seva-trust': 'seva.trust@ahaarvritti.com',
+        'annapurna': 'annapurna@ahaarvritti.com',
+        'helping-hands': 'helping.hands@ahaarvritti.com'
+    };
+    
+    const foodBankNames = {
+        'hope-foundation': 'Hope Foundation',
+        'seva-trust': 'Seva Trust',
+        'annapurna': 'Annapurna Food Bank',
+        'helping-hands': 'Helping Hands'
+    };
+    
+    const foodBankWhatsApp = {
+        'hope-foundation': '919463936099',
+        'seva-trust': '919463936099',
+        'annapurna': '919463936099',
+        'helping-hands': '919463936099'
+    };
+    
+    const recipientEmail = foodBankEmails[donation.foodBank] || 'pxrple6@gmail.com';
+    const foodBankName = foodBankNames[donation.foodBank] || 'Food Bank';
+    const whatsappNumber = foodBankWhatsApp[donation.foodBank] || '919463936099';
+    
+
+    const subject = `New Food Donation - ${donation.restaurantName}`;
+    const emailBody = formatEmailBody(donation, foodBankName);
+    const whatsappMessage = formatWhatsAppMessage(donation, foodBankName);
+    
+
+    const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+    
+
+    const modal = document.createElement('div');
+    modal.className = 'contact-choice-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h3>📧 Notify ${foodBankName}</h3>
+            <p>Choose how you'd like to notify the food bank about your donation:</p>
+            
+            <div class="contact-options">
+                <button class="contact-option-btn email-option" onclick="sendEmailChoice('${mailtoLink}')">
+                    <div class="option-icon">📧</div>
+                    <div class="option-text">
+                        <div class="option-title">Send Email</div>
+                        <div class="option-desc">Open your email client</div>
+                    </div>
+                </button>
+                
+                <button class="contact-option-btn whatsapp-option" onclick="sendWhatsAppChoice('${whatsappLink}')">
+                    <div class="option-icon">💬</div>
+                    <div class="option-text">
+                        <div class="option-title">Send WhatsApp</div>
+                        <div class="option-desc">Open WhatsApp with pre-filled message</div>
+                    </div>
+                </button>
+                
+                <button class="contact-option-btn both-option" onclick="sendBothChoice('${mailtoLink}', '${whatsappLink}')">
+                    <div class="option-icon">📱</div>
+                    <div class="option-text">
+                        <div class="option-title">Send Both</div>
+                        <div class="option-desc">Email + WhatsApp notification</div>
+                    </div>
+                </button>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeContactModal()">Skip</button>
+            </div>
+        </div>
+    `;
+    
+
+    if (!document.getElementById('contact-choice-styles')) {
+        const style = document.createElement('style');
+        style.id = 'contact-choice-styles';
+        style.textContent = `
+            .contact-choice-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+                padding: 2rem;
+            }
+            
+            .modal-content {
+                background: rgba(6, 55, 47, 0.95);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(76, 175, 80, 0.3);
+                border-radius: 16px;
+                padding: 2rem;
+                max-width: 500px;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .modal-content h3 {
+                color: #4caf50;
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+            
+            .modal-content p {
+                color: #a5d6a7;
+                margin-bottom: 2rem;
+                font-size: 1rem;
+            }
+            
+            .contact-options {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .contact-option-btn {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 1rem;
+                border: 1px solid rgba(76, 175, 80, 0.3);
+                border-radius: 12px;
+                background: rgba(10, 74, 63, 0.4);
+                color: #e8f5e8;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: left;
+            }
+            
+            .contact-option-btn:hover {
+                border-color: rgba(76, 175, 80, 0.5);
+                background: rgba(10, 74, 63, 0.6);
+                transform: translateY(-2px);
+            }
+            
+            .email-option:hover {
+                border-color: #4caf50;
+                box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+            }
+            
+            .whatsapp-option:hover {
+                border-color: #25d366;
+                box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
+            }
+            
+            .both-option:hover {
+                border-color: #ff9800;
+                box-shadow: 0 5px 15px rgba(255, 152, 0, 0.2);
+            }
+            
+            .option-icon {
+                font-size: 2rem;
+                min-width: 40px;
+            }
+            
+            .option-title {
+                color: #4caf50;
+                font-weight: 600;
+                font-size: 1.1rem;
+                margin-bottom: 0.2rem;
+            }
+            
+            .option-desc {
+                color: #a5d6a7;
+                font-size: 0.9rem;
+            }
+            
+            .modal-actions {
+                display: flex;
+                justify-content: center;
+            }
+            
+            @media (max-width: 768px) {
+                .modal-content {
+                    margin: 1rem;
+                    padding: 1.5rem;
+                }
+                
+                .contact-option-btn {
+                    padding: 0.8rem;
+                }
+                
+                .option-icon {
+                    font-size: 1.5rem;
+                    min-width: 30px;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(modal);
+}
+
+
+function sendEmailChoice(mailtoLink) {
+    try {
+        window.open(mailtoLink, '_blank');
+        showEmailNotification('Email client opened successfully!');
+    } catch (error) {
+        console.error('Failed to open email client:', error);
+        showEmailNotification('Failed to open email client. Please check your email settings.');
+    }
+    closeContactModal();
+}
+
+function sendWhatsAppChoice(whatsappLink) {
+    try {
+        window.open(whatsappLink, '_blank');
+        showEmailNotification('WhatsApp opened successfully!');
+    } catch (error) {
+        console.error('Failed to open WhatsApp:', error);
+        showEmailNotification('Failed to open WhatsApp. Please check if WhatsApp is installed.');
+    }
+    closeContactModal();
+}
+
+function sendBothChoice(mailtoLink, whatsappLink) {
+    
+    try {
+        window.open(mailtoLink, '_blank');
+    } catch (error) {
+        console.error('Failed to open email client:', error);
+    }
+    
+   
+    setTimeout(() => {
+        try {
+            window.open(whatsappLink, '_blank');
+        } catch (error) {
+            console.error('Failed to open WhatsApp:', error);
+        }
+    }, 1000);
+    
+    showEmailNotification('Email and WhatsApp opened successfully!');
+    closeContactModal();
+}
+
+function closeContactModal() {
+    const modal = document.querySelector('.contact-choice-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+
+function formatWhatsAppMessage(donation, foodBankName) {
+    const date = new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    const time = new Date().toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    return `Hello ${foodBankName}! 🍽️
+
+A new food donation has been submitted through Ahaarvritti platform.
+
+*DONATION DETAILS:*
+• Restaurant: ${donation.restaurantName}
+• Contact Person: ${donation.contactPerson}
+• Phone: ${donation.phone}
+• Email: ${donation.email}
+
+• Food Type: ${donation.foodType}
+• Quantity: ${donation.quantity}
+• Expiry Date: ${donation.expiryDate}
+• Preferred Pickup: ${donation.pickupDate}
+
+• Special Instructions: ${donation.instructions || 'None'}
+
+*Submission Details:*
+• Submitted on: ${date} at ${time}
+• Platform: Ahaarvritti Web Application
+
+Please contact the restaurant within 2 hours to confirm pickup arrangements.
+
+Thank you for your service to the community! 🙏
+
+Best regards,
+Ahaarvritti Team`;
+}
+
+
+function formatEmailBody(donation, foodBankName) {
+    const date = new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    const time = new Date().toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    return `Dear ${foodBankName} Team,
+
+A new food donation has been submitted through Ahaarvritti platform.
+
+DONATION DETAILS:
+=================
+Restaurant: ${donation.restaurantName}
+Contact Person: ${donation.contactPerson}
+Phone: ${donation.phone}
+Email: ${donation.email}
+Address: ${donation.address}
+
+Food Type: ${donation.foodType}
+Quantity: ${donation.quantity}
+Expiry Date: ${donation.expiryDate}
+Preferred Pickup Date: ${donation.pickupDate}
+
+Special Instructions: ${donation.instructions || 'None'}
+
+Submission Details:
+- Submitted on: ${date} at ${time}
+- Platform: Ahaarvritti Web Application
+
+Please contact the restaurant within 2 hours to confirm pickup arrangements.
+
+Thank you for your service to the community!
+
+Best regards,
+Ahaarvritti Team
+---
+This is an automated notification from the Ahaarvritti food donation platform.`;
+}
+
+
+function showEmailNotification(message) {
+   
+    const notification = document.createElement('div');
+    notification.className = 'email-notification';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">✅</div>
+            <div class="notification-text">
+                <h4>Success!</h4>
+                <p>${message}</p>
+            </div>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+    `;
+    
+   
+    if (!document.getElementById('email-notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'email-notification-styles';
+        style.textContent = `
+            .email-notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #4caf50, #66bb6a);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                animation: slideInRight 0.5s ease;
+                max-width: 350px;
+            }
+            
+            .notification-content {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .notification-icon {
+                font-size: 1.5rem;
+            }
+            
+            .notification-text h4 {
+                margin: 0 0 4px 0;
+                font-size: 1rem;
+            }
+            
+            .notification-text p {
+                margin: 0;
+                font-size: 0.9rem;
+                opacity: 0.9;
+            }
+            
+            .notification-close {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 0;
+                margin-left: auto;
+                opacity: 0.7;
+                transition: opacity 0.3s ease;
+            }
+            
+            .notification-close:hover {
+                opacity: 1;
+            }
+            
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(notification);
+    
+    
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
+}
+
+
+function updateDashboardStats() {
+    const totalDonations = document.querySelector('.stat-card:nth-child(1) .stat-value');
+    const totalMeals = document.querySelector('.stat-card:nth-child(2) .stat-value');
+    
+    if (totalDonations) {
+        const currentCount = parseInt(totalDonations.textContent.replace(',', ''));
+        totalDonations.textContent = (currentCount + 1).toLocaleString();
+    }
+    
+    if (totalMeals) {
+        const currentMeals = parseInt(totalMeals.textContent.replace(',', ''));
+        // Estimate 10-50 meals per donation
+        const newMeals = Math.floor(Math.random() * 40) + 10;
+        totalMeals.textContent = (currentMeals + newMeals).toLocaleString();
+    }
+}
+
+
+function setupDateInputs() {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const expiryDateInput = document.getElementById('expiryDate');
+    const pickupDateInput = document.getElementById('pickupDate');
+    
+    if (expiryDateInput) {
+        expiryDateInput.min = today.toISOString().split('T')[0];
+    }
+    
+    if (pickupDateInput) {
+        pickupDateInput.min = today.toISOString().split('T')[0];
+    }
+}
+
+
+function setupAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.fade-in').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(el);
+    });
+}
+
+
+function setupInteractiveEffects() {
+
+    const cards = document.querySelectorAll('.stat-card, .donation-item, .contact-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+}
+
+
+function addRippleCSS() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    setupNavigation();
+    setupForms();
+    setupDateInputs();
+    setupAnimations();
+    setupInteractiveEffects();
+    addRippleCSS();
+    
+
+    setTimeout(initializeCharts, 500);
+    
+ 
+    donationData = [
+        {
+            restaurantName: "Green Garden Restaurant",
+            foodType: "fresh",
+            quantity: "25 kg",
+            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000) // 2 hours ago
+        },
+        {
+            restaurantName: "Spice Junction",
+            foodType: "prepared",
+            quantity: "40 portions",
+            timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000) // 4 hours ago
+        },
+        {
+            restaurantName: "Cafe Aroma",
+            foodType: "baked",
+            quantity: "15 kg",
+            timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000) // 6 hours ago
+        }
+    ];
+    
+    console.log('Ahaarvritti Dashboard initialized successfully!');
+}); 
+</script>
+</html>

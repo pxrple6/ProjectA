@@ -1,0 +1,41 @@
+{
+  "name": "My Awesome Project",
+  "version": "1.0.0",
+  "description": "A project to demonstrate proper code block formatting.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/user/my-awesome-project.git"
+  },
+  "keywords": [
+    "example",
+    "formatting",
+    "code-block"
+  ],
+  "author": "Your Name",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/user/my-awesome-project/issues"
+  },
+  "homepage": "https://github.com/user/my-awesome-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "settings": {
+    "featureFlags": {
+      "newUI": true,
+      "betaAccess": false
+    },
+    "apiEndpoints": {
+      "users": "/api/v1/users",
+      "products": "/api/v1/products"
+    }
+  }
+}

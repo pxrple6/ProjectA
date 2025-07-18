@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annadatri - Resources</title>
+    <style>
+        :root {
+            --primary-color: #0d6153;
+            --secondary-color: #f5c242;
+            --light-bg: #f5f5f5;
+            --text-color: #333;
+            --white: #fff;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .logo span {
+            color: var(--white);
+            margin-left: 5px;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        .login-btn {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .login-btn:hover {
+            background-color: #e0b43a;
+        }
+        /* Hero Section */
+        .hero {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 5%;
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .hero-content {
+            width: 50%;
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .hero h1 span {
+            color: var(--secondary-color);
+        }
+        .hero p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .hero-image {
+            position: absolute;
+            right: 10%;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 10px solid rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #e0b43a;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border: 1px solid var(--white);
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .btn-secondary i {
+            margin-right: 8px;
+        }
+        .donate-btn {
+            position: absolute;
+            bottom: 3rem;
+            right: 5%;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+        .donate-btn:hover {
+            background-color: #e0b43a;
+        }
+        .donate-btn i {
+            margin-left: 10px;
+        }
+        /* Trust Section */
+        .trust-section {
+            padding: 2rem 5%;
+            background-color: var(--white);
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .trust-text {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            color: #666;
+        }
+        .trust-text span {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        .partners {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .partner {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-weight: 500;
+        }
+        .partner img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        /* About Section */
+        .about-section {
+            padding: 5rem 5%;
+            display: flex;
+            gap: 5rem;
+            align-items: center;
+        }
+        .about-content {
+            flex: 1;
+        }
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        .about-features {
+            margin-top: 2rem;
+        }
+        .feature-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .feature-item:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1rem;
+            margin-right: 0.5rem;
+        }
+        .about-gallery {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 1rem;
+            position: relative;
+        }
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-item:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1/3;
+        }
+        .gallery-item:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        .gallery-item:nth-child(3) {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        /* Services Section */
+        .services-section {
+            padding: 5rem 5%;
+            background-color: var(--white);
+        }
+        .section-header {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .section-header p {
+            color: #666;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            background-color: var(--light-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .service-icon img {
+            width: 30px;
+            height: 30px;
+            filter: invert(1);
+        }
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .service-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        /* Events Section */
+        .events-section {
+            padding: 5rem 5%;
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        .events-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .events-navigation {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .nav-btn {
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .event-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            display: flex;
+            gap: 2rem;
+        }
+        .event-image {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .event-content {
+            flex: 1;
+        }
+        .event-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 1rem;
+        }
+        .event-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .event-description {
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+        .read-more {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        .read-more:after {
+            content: "→";
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        .read-more:hover:after {
+            transform: translateX(3px);
+        }
+        /* Stories Section */
+        .stories-section {
+            padding: 5rem 5%;
+            background-color: var(--white);
+        }
+        .stories-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .story-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 0.3s ease-in-out;
+            display: block;
+        }
+        .story-card:hover .story-image img {
+            transform: scale(1.05);
+        }
+        .story-content {
+            padding: 1.5rem;
+        }
+        .story-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .story-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 5%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+        }
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .cta-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .cta-content p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        /* Footer */
+        footer {
+            background-color: var(--white);
+            padding: 3rem 5% 1rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-column h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        .subscribe-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .subscribe-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .subscribe-btn {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        /* Social Media Icons */
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        /* Decorative Elements */
+        .dots-decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: radial-gradient(circle, var(--secondary-color) 1px, transparent 1px);
+            background-size: 10px 10px;
+            opacity: 0.2;
+        }
+        .top-left-dots {
+            top: 10%;
+            left: 2%;
+        }
+        .bottom-right-dots {
+            bottom: 10%;
+            right: 2%;
+        }
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes heroPop {
+            0% { opacity: 0; transform: scale(0.95) translateY(40px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes floatDots {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+        .animate-fadeInUp { opacity: 0; animation: fadeInUp 1s forwards; }
+        .animate-fadeInLeft { opacity: 0; animation: fadeInLeft 1s forwards; }
+        .animate-fadeInRight { opacity: 0; animation: fadeInRight 1s forwards; }
+        .hero-animate { opacity: 0; animation: heroPop 1.2s 0.2s forwards; }
+        .dots-decoration { animation: floatDots 4s ease-in-out infinite; }
+        /* Enhanced Button Hover */
+        .btn-primary, .btn-secondary, .donate-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::after, .btn-secondary::after, .donate-btn::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 100%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+            z-index: 0;
+        }
+        .btn-primary:active::after, .btn-secondary:active::after, .donate-btn:active::after {
+            width: 200%;
+            height: 500%;
+            transition: 0s;
+        }
+        .btn-primary, .btn-secondary, .donate-btn {
+            z-index: 1;
+        }
+        /* Card Hover Pop */
+        .service-card:hover, .story-card:hover, .event-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+        }
+        /* Footer Social Icon Animation */
+        .social-icon {
+            transition: transform 0.3s, background 0.3s, color 0.3s;
+        }
+        .social-icon:hover {
+            transform: scale(1.2) rotate(-8deg);
+        }
+        /* Scroll-to-Top Button */
+        #scrollToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 1000;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        #scrollToTopBtn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .hamburger span {
+            height: 4px;
+            width: 100%;
+            background: var(--white);
+            margin: 5px 0;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem 5%;
+            }
+            .hamburger {
+                display: flex;
+            }
+            nav {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100vw;
+                background: var(--primary-color);
+                flex-direction: column;
+                align-items: center;
+                display: none;
+                z-index: 1000;
+            }
+            nav.active {
+                display: flex;
+            }
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 1rem 0;
+            }
+            .hero {
+                flex-direction: column;
+                min-height: unset;
+                padding: 2rem 5% 6rem 5%;
+            }
+            .hero-content {
+                width: 100%;
+                text-align: center;
+            }
+            .hero-image {
+                position: relative;
+                margin: 2rem auto 0;
+                width: 200px;
+                height: 200px;
+            }
+            .about-section {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 3rem 5%;
+            }
+            .about-gallery {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 1fr);
+            }
+            .gallery-item {
+                height: 180px;
+            }
+            .services-section, .events-section, .stories-section, .cta-section {
+                padding: 3rem 5%;
+            }
+            .services-grid, .stories-grid {
+                grid-template-columns: 1fr;
+            }
+            .event-card {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .footer-column {
+                text-align: center;
+            }
+            #scrollToTopBtn {
+                right: 16px;
+                bottom: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            .about-content h2, .section-header h2, .cta-content h2 {
+                font-size: 1.2rem;
+            }
+            .service-card, .story-card, .event-card {
+                padding: 1rem;
+            }
+            .gallery-item {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo">
+            Annadatri
+        </div>
+        <div class="hamburger" id="hamburger" aria-label="Open navigation" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#blog">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main style="min-height: 60vh; padding: 3rem 5%; max-width: 700px; margin: 0 auto;">
+        <article id="blogBox" style="background: var(--white); border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); padding: 2rem; color: #444; font-size: 1.1rem; line-height: 1.8;">
+            <h1 style="color: var(--primary-color); margin-bottom: 0.5rem;">Why Malnutrition Still Exists in India — and What We Can Do</h1>
+            <div style="color: #888; font-size: 1rem; margin-bottom: 2rem;">by <b>Mohhika</b></div>
+            <a id="readMoreBtn" href="#" style="display:block; margin:0 auto 1.5rem auto; color:var(--secondary-color); font-weight:600; text-decoration:none; cursor:pointer; text-align:center; max-width:200px;">Read More</a>
+            <div id="blogContent" style="display:none;">
+                <div style="margin-bottom:1.5rem;">
+<p>In a country that grows more than enough food to feed its people, millions still go to bed on empty stomachs. But the more painful truth? Many don’t. They eat, yet they remain malnourished. Because hunger isn’t always loud. Sometimes, it’s silent. It hides in the pale face of a schoolgirl too weak to concentrate. In the stunted growth of a toddler whose mother did everything she could. In the tired eyes of a woman who always feeds herself last.</p>
+<p>We’ve been told the problem is poverty. Or population. Or lack of food. But India doesn’t face a food shortage — it faces a nutrition crisis. And it’s everywhere. In slums and villages. In low-income homes and government schools. Even in cities, where meals are served, but vitamins are forgotten. Where snacks come in shiny packets, and food is quick, but empty.</p>
+<p>What makes this crisis worse is how invisible it is. When we think of malnutrition, we imagine starvation. But what about the child who eats only rice every day? The mother who fills her belly with tea and biscuits, hoping it’s enough? What about the families that don’t know they’re deficient — until it’s too late?</p>
+<p>In cities, it often looks like a choice. Fast food over fresh food. Convenience over care. But behind that choice is a lack of awareness about what our bodies truly need and what our children are missing. In villages, it’s more brutal. A lack of access. A lack of means. Families survive on staples. Fruits are rare. Protein is a luxury. And girls — they grow up hearing they should eat less, stay small, stay quiet. So they do.</p>
+<p>This is where Annadatri was born. Out of frustration. Out of hope. Out of the belief that food should not just fill — it should nourish. That knowledge should be shared, not reserved. That dignity belongs on every plate. We don’t just serve meals. We sit with people. We talk. We teach. We listen. We ask: what does a healthy meal look like to you? And then we work with them to make it possible, accessible, and sustainable.</p>
+<p>We host drives where food isn’t just distributed — it’s explained. We show how to build balanced meals with what’s already available. We break myths — about fat, about iron, about what girls and women deserve to eat. We talk about anaemia, about tiredness, about the cost of eating last. We teach children why their growing bodies need more than fullness — they need fuel. We believe change doesn’t begin with charity. It begins with understanding.</p>
+<p>But we cannot do this alone.</p>
+<p>If you're reading this, you're part of the solution already. Because the first step is seeing the problem. The next step is to talk about it. Challenge it. Share this. Volunteer. Show up. Use your voice in whatever way you can, because malnutrition doesn’t make noise. It doesn’t always look like hunger. But it robs people — slowly, quietly — of potential, energy, and life.</p>
+<p>No girl should feel guilty for being hungry. No child should fall behind because they didn’t get enough iron. No mother should sacrifice her health in silence. And no one — not one person—should be told that nutrition is not for them.</p>
+<p><b>Food is a right. Nourishment is a right. And together, we can make sure they’re no longer treated like privileges.</b></p>
+                </div>
+                <div id="closingMessage" style="margin-top:2rem; color:#555; font-size:1rem; text-align:center;">
+                    <p>Thank you for reading and caring. If you want to join Annadatri’s mission, volunteer, or share your own story, <a href="https://forms.gle/LNG5nXBr5MqG7yoM9" style="color:var(--primary-color);text-decoration:underline;">get in touch here</a> or follow us on Instagram. Every voice and action counts!</p>
+                </div>
+            </div>
+        </article>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="logo">
+                    Annadatri
+                </div>
+                <p style="color: #666; margin-top: 1rem;">Working together to create a world where no one suffers from malnutrition or hunger.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 Annadatri. All rights reserved.
+        </div>
+    </footer>
+    <button id="scrollToTopBtn" title="Back to top" aria-label="Scroll to top">↑</button>
+    <script>
+    // Hamburger menu functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.querySelector('header nav');
+        hamburger.addEventListener('click', function() {
+            nav.classList.toggle('active');
+        });
+        hamburger.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') nav.classList.toggle('active');
+        });
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+        // Read More functionality
+        const readMoreBtn = document.getElementById('readMoreBtn');
+        const blogContent = document.getElementById('blogContent');
+        if(readMoreBtn && blogContent) {
+            readMoreBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if(blogContent.style.display === 'none') {
+                    blogContent.style.display = 'block';
+                    readMoreBtn.textContent = 'Show Less';
+                } else {
+                    blogContent.style.display = 'none';
+                    readMoreBtn.textContent = 'Read More';
+                }
+            });
+        }
+    });
+    // Scroll-to-top button
+    const scrollBtn = document.getElementById('scrollToTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            scrollBtn.style.display = 'block';
+        } else {
+            scrollBtn.style.display = 'none';
+        }
+    });
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+</body>
+</html> 
