@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annadatri - Combating Malnourishment</title>
-    <!-- Link to chatbot's stylesheet -->
     <link rel="stylesheet" href="style.css">
     <style>
         :root {
@@ -14,1039 +13,389 @@
             --text-color: #333;
             --white: #fff;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: var(--primary-color);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--light-bg); color: var(--text-color); line-height: 1.6; }
+        header { background-color: var(--primary-color); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 12px rgba(13,97,83,0.08); border-bottom: 3px solid #f5c242; }
+        .logo { color: var(--white); font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 1.5rem; }
+        nav ul li a { color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 4px; }
+        nav ul li a:after { content: ''; display: block; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #f5c242; border-radius: 2px; transform: scaleX(0); transition: transform 0.3s; }
+        nav ul li a:hover:after, nav ul li a:focus:after { transform: scaleX(1); }
+        nav ul li a:hover { color: var(--secondary-color); }
+        .hero { background-color: var(--primary-color); color: var(--white); padding: 3rem 5%; overflow: hidden; min-height: 500px; display: flex; align-items: center; position: relative; }
+        .hero-content { width: 50%; position: relative; z-index: 2; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; line-height: 1.2; }
+        .hero h1 span { color: var(--secondary-color); }
+        .hero p { margin-bottom: 2rem; opacity: 0.9; }
+        .hero-image { position: absolute; right: 10%; width: 350px; height: 350px; border-radius: 50%; overflow: hidden; border: 10px solid rgba(255,255,255,0.1); z-index: 1; }
+        .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+        .cta-buttons { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        .btn-primary { background-color: var(--secondary-color); color: var(--primary-color); padding: 0.8rem 2rem; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s; }
+        .btn-primary:hover { background-color: #e0b43a; }
+        .btn-secondary { background-color: transparent; color: var(--white); padding: 0.8rem 2rem; border: 1px solid var(--white); border-radius: 4px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.3s; }
+        .btn-secondary:hover { background-color: rgba(255,255,255,0.1); }
+        .btn-secondary i { margin-right: 8px; }
+        .about-section { padding: 5rem 5%; display: flex; gap: 5rem; align-items: center; }
+        .about-content { flex: 1; }
+        .about-content h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary-color); }
+        .about-content p { margin-bottom: 1.5rem; color: #666; }
+        .about-features { margin-top: 2rem; }
+        .feature-item { margin-bottom: 1rem; display: flex; align-items: center; }
+        .feature-item:before { content: "•"; color: var(--secondary-color); font-weight: bold; display: inline-block; width: 1rem; margin-right: 0.5rem; }
+        .about-gallery { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 1rem; }
+        .gallery-item { overflow: hidden; border-radius: 8px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1/3; }
+        .gallery-item:nth-child(2) { grid-column: 2; grid-row: 1; }
+        .gallery-item:nth-child(3) { grid-column: 2; grid-row: 2; }
+        .services-section { padding: 5rem 5%; background-color: var(--white); }
+        .section-header { margin-bottom: 3rem; text-align: center; }
+        .section-header h2 { font-size: 2rem; color: var(--primary-color); margin-bottom: 0.5rem; }
+        .section-header p { color: #666; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .service-card { background-color: var(--light-bg); padding: 2rem; border-radius: 8px; transition: all 0.3s; }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .service-icon { width: 60px; height: 60px; background-color: var(--primary-color); display: flex; align-items: center; justify-content: center; border-radius: 8px; margin-bottom: 1.5rem; }
+        .service-icon img { width: 30px; height: 30px; filter: invert(1); }
+        .service-card h3 { margin-bottom: 1rem; color: var(--primary-color); }
+        .service-card p { color: #666; margin-bottom: 1rem; }
+        .read-more { color: var(--secondary-color); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; }
+        .read-more:after { content: "→"; margin-left: 5px; transition: transform 0.3s; }
+        .read-more:hover:after { transform: translateX(3px); }
+        .events-section { padding: 5rem 5%; background-color: var(--primary-color); color: var(--white); }
+        .events-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .events-navigation { display: flex; gap: 0.5rem; }
+        .nav-btn { width: 30px; height: 30px; background-color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; transition: all 0.3s; }
+        .nav-btn:hover { background-color: rgba(255,255,255,0.3); }
+        .event-card { background-color: rgba(255,255,255,0.1); padding: 2rem; border-radius: 8px; display: flex; gap: 2rem; }
+        .event-image { flex: 1; border-radius: 8px; overflow: hidden; }
+        .event-image img { height: 240px; width: 100%; object-fit: cover; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: block; }
+        .event-content { flex: 1; }
+        .event-number { font-size: 3rem; font-weight: bold; color: rgba(255,255,255,0.2); margin-bottom: 1rem; }
+        .event-title { font-size: 1.5rem; margin-bottom: 1rem; }
+        .event-description { margin-bottom: 2rem; opacity: 0.8; }
+        .event-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .stories-section { padding: 5rem 5%; background-color: var(--white); }
+        .stories-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .story-card { background-color: var(--light-bg); border-radius: 8px; overflow: hidden; transition: all 0.3s; }
+        .story-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .story-image img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.3s ease-in-out; display: block; }
+        .story-card:hover .story-image img { transform: scale(1.05); }
+        .story-content { padding: 1.5rem; }
+        .story-content h3 { color: var(--primary-color); margin-bottom: 0.5rem; }
+        .story-content p { color: #666; margin-bottom: 1rem; }
+        .cta-section { padding: 5rem 5%; background-color: var(--primary-color); color: var(--white); text-align: center; }
+        .cta-content { max-width: 700px; margin: 0 auto; }
+        .cta-content h2 { font-size: 2rem; margin-bottom: 1rem; }
+        .cta-content p { margin-bottom: 2rem; opacity: 0.9; }
+        footer { background-color: var(--white); padding: 3rem 5% 1rem; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-column h3 { color: var(--primary-color); margin-bottom: 1.5rem; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.8rem; }
+        .footer-links a { color: #666; text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--primary-color); }
+        .copyright { text-align: center; padding-top: 2rem; color: #666; font-size: 0.9rem; border-top: 1px solid #eee; }
+        .social-icons { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .social-icon { width: 36px; height: 36px; border-radius: 50%; background-color: var(--light-bg); display: flex; align-items: center; justify-content: center; color: var(--primary-color); text-decoration: none; transition: all 0.3s; }
+        .social-icon:hover { background-color: var(--primary-color); color: var(--white); transform: scale(1.2) rotate(-8deg); }
+        .dots-decoration { position: absolute; width: 100px; height: 100px; background-image: radial-gradient(circle, var(--secondary-color) 1px, transparent 1px); background-size: 10px 10px; opacity: 0.2; animation: floatDots 4s ease-in-out infinite; }
+        .top-left-dots { top: 10%; left: 2%; }
+        .bottom-right-dots { bottom: 10%; right: 2%; }
+        @keyframes floatDots { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        #scrollToTopBtn { display: none; position: fixed; bottom: 40px; right: 40px; z-index: 1000; background: var(--secondary-color); color: var(--primary-color); border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 1.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; transition: background 0.3s, transform 0.3s; }
+        #scrollToTopBtn:hover { background: var(--primary-color); color: var(--white); transform: scale(1.1); }
+        .hamburger { display: none; flex-direction: column; justify-content: center; width: 36px; height: 36px; cursor: pointer; z-index: 1001; }
+        .hamburger span { height: 4px; width: 100%; background: var(--white); margin: 5px 0; border-radius: 2px; transition: all 0.3s; }
+        .reveal-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(.4,2,.6,1), transform 0.8s cubic-bezier(.4,2,.6,1); }
+        .reveal-on-scroll.revealed { opacity: 1; transform: none; }
+
+        /* =============================================
+           RECOGNITION SECTION
+        ============================================= */
+        .recognition-section {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #0a4f42 0%, #0d6153 60%, #0f7363 100%);
             color: var(--white);
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo span {
-            color: var(--white);
-            margin-left: 5px;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 1.5rem;
-        }
-        
-        nav ul li a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        nav ul li a:hover {
-            color: var(--secondary-color);
-        }
-        
-        .login-btn {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            padding: 0.5rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .login-btn:hover {
-            background-color: #e0b43a;
-        }
-        
-        /* Hero Section */
-        .hero {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 3rem 5%;
             position: relative;
             overflow: hidden;
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-            position: relative;
         }
-        
-        .hero-content {
-            width: 50%;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-        
-        .hero h1 span {
-            color: var(--secondary-color);
-        }
-        
-        .hero p {
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .hero-image {
+
+        .recognition-section::before {
+            content: '';
             position: absolute;
-            right: 10%;
-            width: 350px;
-            height: 350px;
+            top: -80px; right: -80px;
+            width: 320px; height: 320px;
+            background: radial-gradient(circle, rgba(245,194,66,0.12) 0%, transparent 70%);
             border-radius: 50%;
-            overflow: hidden;
-            border: 10px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .recognition-section::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; left: -60px;
+            width: 240px; height: 240px;
+            background: radial-gradient(circle, rgba(245,194,66,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .recognition-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
             z-index: 1;
         }
-        
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .btn-primary {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary:hover {
-            background-color: #e0b43a;
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--white);
-            padding: 0.8rem 2rem;
-            border: 1px solid var(--white);
-            border-radius: 4px;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.3s;
-        }
-        
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .btn-secondary i {
-            margin-right: 8px;
-        }
-        
-        .donate-btn {
-            position: absolute;
-            bottom: 3rem;
-            right: 5%;
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
-            z-index: 2;
-        }
-        
-        .donate-btn:hover {
-            background-color: #e0b43a;
-        }
-        
-        .donate-btn i {
-            margin-left: 10px;
-        }
-        
-        /* Trust Section */
-        .trust-section {
-            padding: 2rem 5%;
-            background-color: var(--white);
-            text-align: center;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .trust-text {
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-            color: #666;
-        }
-        
-        .trust-text span {
-            color: var(--secondary-color);
-            font-weight: bold;
-        }
-        
-        .partners {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-        
-        .partner {
-            display: flex;
-            align-items: center;
-            color: #666;
-            font-weight: 500;
-        }
-        
-        .partner img {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
-        }
-        
-        /* About Section */
-        .about-section {
-            padding: 5rem 5%;
-            display: flex;
-            gap: 5rem;
-            align-items: center;
-        }
-        
-        .about-content {
-            flex: 1;
-        }
-        
-        .about-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        .about-content p {
-            margin-bottom: 1.5rem;
-            color: #666;
-        }
-        
-        .about-features {
-            margin-top: 2rem;
-        }
-        
-        .feature-item {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .feature-item:before {
-            content: "•";
-            color: var(--secondary-color);
-            font-weight: bold;
-            display: inline-block;
-            width: 1rem;
-            margin-right: 0.5rem;
-        }
-        
-        .about-gallery {
-            flex: 1;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-gap: 1rem;
-            position: relative;
-        }
-        
-        .gallery-item {
-            overflow: hidden;
-            border-radius: 8px;
-            position: relative;
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-        
-        .gallery-item:nth-child(1) {
-            grid-column: 1;
-            grid-row: 1/3;
-        }
-        
-        .gallery-item:nth-child(2) {
-            grid-column: 2;
-            grid-row: 1;
-        }
-        
-        .gallery-item:nth-child(3) {
-            grid-column: 2;
-            grid-row: 2;
-        }
-        
-        /* Services Section */
-        .services-section {
-            padding: 5rem 5%;
-            background-color: var(--white);
-        }
-        
-        .section-header {
-            margin-bottom: 3rem;
-            position: relative;
-            text-align: center;
-        }
-        
-        .section-header h2 {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .section-header p {
-            color: #666;
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        .service-card {
-            background-color: var(--light-bg);
-            padding: 2rem;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .service-icon {
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-        
-        .service-icon img {
-            width: 30px;
-            height: 30px;
-            filter: invert(1);
-        }
-        
-        .service-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        .service-card p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-        
-        /* Events Section */
-        .events-section {
-            padding: 5rem 5%;
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-        
-        .events-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        
-        .events-navigation {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .nav-btn {
-            width: 30px;
-            height: 30px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .nav-btn:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .event-card {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 8px;
-            display: flex;
-            gap: 2rem;
-        }
-        
-        .event-image {
-            flex: 1;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .event-image img {
-            height: 240px;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            display: block;
-        }
-        @media (max-width: 768px) {
-            .event-image img {
-                height: 160px;
-            }
-        }
-        @media (max-width: 480px) {
-            .event-image img {
-                height: 110px;
-            }
-        }
-        
-        .event-content {
-            flex: 1;
-        }
-        
-        .event-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: rgba(255, 255, 255, 0.2);
-            margin-bottom: 1rem;
-        }
-        
-        .event-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .event-description {
-            margin-bottom: 2rem;
-            opacity: 0.8;
-        }
-        
-        .read-more {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-        }
-        
-        .read-more:after {
-            content: "→";
-            margin-left: 5px;
-            transition: transform 0.3s;
-        }
-        
-        .read-more:hover:after {
-            transform: translateX(3px);
-        }
-        
-        /* Stories Section */
-        .stories-section {
-            padding: 5rem 5%;
-            background-color: var(--white);
-        }
-        
-        .stories-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        
-        .stories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .story-card {
-            background-color: var(--light-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-        
-        .story-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        
-        
-       .story-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top; /* 👈 this keeps the top of the image in focus */
-  transition: transform 0.3s ease-in-out;
-  display: block;
-}
 
-        
-        .story-card:hover .story-image img {
-            transform: scale(1.05);
-        }
-        
-        .story-content {
-            padding: 1.5rem;
-        }
-        
-        .story-content h3 {
-            color: var(--primary-color);
+        .recognition-header h2 {
+            font-size: 2.4rem;
+            color: var(--white);
             margin-bottom: 0.5rem;
+            letter-spacing: 1px;
         }
-        
-        .story-content p {
-            color: #666;
-            margin-bottom: 1rem;
+
+        .recognition-header .gold-line {
+            display: inline-block;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+            margin: 0.8rem auto 1rem;
         }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 5rem 5%;
-            background-color: var(--primary-color);
-            color: var(--white);
-            text-align: center;
+
+        .recognition-header p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1.05rem;
         }
-        
-        .cta-content {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .cta-content h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        
-        .cta-content p {
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--white);
-            padding: 3rem 5% 1rem;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-column h3 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-links a {
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .subscribe-form {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        
-        .subscribe-input {
-            flex: 1;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        
-        .subscribe-btn {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            border: none;
-            padding: 0 1.5rem;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            color: #666;
-            font-size: 0.9rem;
-            border-top: 1px solid #eee;
-        }
-        
-        /* Social Media Icons */
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .social-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: var(--light-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .social-icon:hover {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-        
-        /* Decorative Elements */
-        .dots-decoration {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background-image: radial-gradient(circle, var(--secondary-color) 1px, transparent 1px);
-            background-size: 10px 10px;
-            opacity: 0.2;
-        }
-        
-        .top-left-dots {
-            top: 10%;
-            left: 2%;
-        }
-        
-        .bottom-right-dots {
-            bottom: 10%;
-            right: 2%;
-        }
-        
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .hero-content {
-                width: 60%;
-            }
-            
-            .hero-image {
-                width: 300px;
-                height: 300px;
-            }
-            
-            .about-section {
-                flex-direction: column;
-                gap: 3rem;
-            }
-            
-            .event-card {
-                flex-direction: column;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 1rem;
-            }
-            
-            nav {
-                margin-top: 1rem;
-            }
-            
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            nav ul li {
-                margin: 0 0.7rem;
-            }
-            
-            .hero {
-                text-align: center;
-                padding-top: 2rem;
-                padding-bottom: 8rem;
-            }
-            
-            .hero-content {
-                width: 100%;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-image {
-                position: relative;
-                margin: 3rem auto 0;
-                width: 250px;
-                height: 250px;
-            }
-            
-            .cta-buttons {
-                justify-content: center;
-            }
-            
-            .donate-btn {
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: 2rem;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .service-card,
-            .story-card {
-                padding: 1.5rem;
-            }
-            
-            .partners {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-        /* --- Animations --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInLeft {
-            from { opacity: 0; transform: translateX(-40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes heroPop {
-            0% { opacity: 0; transform: scale(0.95) translateY(40px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @keyframes floatDots {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0); }
-        }
-        .animate-fadeInUp { opacity: 0; animation: fadeInUp 1s forwards; }
-        .animate-fadeInLeft { opacity: 0; animation: fadeInLeft 1s forwards; }
-        .animate-fadeInRight { opacity: 0; animation: fadeInRight 1s forwards; }
-        .hero-animate { opacity: 0; animation: heroPop 1.2s 0.2s forwards; }
-        .dots-decoration { animation: floatDots 4s ease-in-out infinite; }
-        /* Enhanced Button Hover */
-        .btn-primary, .btn-secondary, .donate-btn {
+
+        /* Timeline */
+        .recognition-timeline {
             position: relative;
-            overflow: hidden;
+            max-width: 860px;
+            margin: 0 auto 4rem auto;
+            z-index: 1;
         }
-        .btn-primary::after, .btn-secondary::after, .donate-btn::after {
-            content: "";
+
+        .recognition-timeline::before {
+            content: '';
             position: absolute;
             left: 50%;
-            top: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255,255,255,0.3);
-            border-radius: 100%;
-            transform: translate(-50%, -50%);
-            transition: width 0.4s, height 0.4s;
-            z-index: 0;
+            top: 0; bottom: 0;
+            width: 3px;
+            background: rgba(245,194,66,0.35);
+            transform: translateX(-50%);
         }
-        .btn-primary:active::after, .btn-secondary:active::after, .donate-btn:active::after {
-            width: 200%;
-            height: 500%;
-            transition: 0s;
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 3rem;
+            position: relative;
         }
-        .btn-primary, .btn-secondary, .donate-btn {
-            z-index: 1;
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
         }
-        /* Card Hover Pop */
-        .service-card:hover, .story-card:hover, .event-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
         }
-        /* Footer Social Icon Animation */
-        .social-icon {
-            transition: transform 0.3s, background 0.3s, color 0.3s;
-        }
-        .social-icon:hover {
-            transform: scale(1.2) rotate(-8deg);
-        }
-        /* Scroll-to-Top Button */
-        #scrollToTopBtn {
-            display: none;
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            z-index: 1000;
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 18px;
+            transform: translateX(-50%);
+            width: 18px; height: 18px;
             background: var(--secondary-color);
-            color: var(--primary-color);
-            border: none;
             border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
+            border: 3px solid #0d6153;
+            box-shadow: 0 0 0 4px rgba(245,194,66,0.25);
+            z-index: 2;
+            flex-shrink: 0;
         }
-        #scrollToTopBtn:hover {
-            background: var(--primary-color);
+
+        .timeline-content {
+            width: calc(50% - 40px);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            padding: 1.5rem 1.8rem;
+            backdrop-filter: blur(4px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        .timeline-year {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--secondary-color);
+            margin-bottom: 0.4rem;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.15rem;
             color: var(--white);
-            transform: scale(1.1);
+            margin-bottom: 0.6rem;
         }
-        /* Hamburger Menu Styles */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            cursor: pointer;
-            z-index: 1001;
+
+        .timeline-content p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.78);
+            line-height: 1.65;
         }
-        .hamburger span {
-            height: 4px;
-            width: 100%;
+
+        .timeline-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 0.8rem;
+            background: rgba(245,194,66,0.15);
+            border: 1px solid rgba(245,194,66,0.35);
+            color: var(--secondary-color);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* News / Press Feature Card */
+        .press-feature {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .press-feature h3 {
+            text-align: center;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .press-card {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(245,194,66,0.3);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .press-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+        }
+
+        .press-logo {
             background: var(--white);
-            margin: 5px 0;
-            border-radius: 2px;
-            transition: all 0.3s;
+            border-radius: 10px;
+            padding: 0.6rem 1.2rem;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        .press-logo span {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #c0392b;
+            font-family: Georgia, serif;
+            white-space: nowrap;
+            letter-spacing: -0.5px;
+        }
+
+        .press-card-content { flex: 1; }
+
+        .press-card-content .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .press-card-content h4 {
+            font-size: 1.05rem;
+            color: var(--white);
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
+
+        .press-card-content a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: gap 0.3s;
+        }
+
+        .press-card-content a:hover { gap: 10px; }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem 5%;
-            }
-            .hamburger {
-                display: flex;
-            }
-            nav {
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100vw;
-                background: var(--primary-color);
-                flex-direction: column;
-                align-items: center;
-                display: none;
-                z-index: 1000;
-            }
-            nav.active {
-                display: flex;
-            }
-            nav ul {
-                flex-direction: column;
-                width: 100%;
-                align-items: center;
-            }
-            nav ul li {
-                margin: 1rem 0;
-            }
-            .hero {
-                flex-direction: column;
-                min-height: unset;
-                padding: 2rem 5% 6rem 5%;
-            }
-            .hero-content {
-                width: 100%;
-                text-align: center;
-            }
-            .hero-image {
-                position: relative;
-                margin: 2rem auto 0;
-                width: 200px;
-                height: 200px;
-            }
-            .about-section {
-                flex-direction: column;
-                gap: 2rem;
-                padding: 3rem 5%;
-            }
-            .about-gallery {
-                grid-template-columns: 1fr;
-                grid-template-rows: repeat(3, 1fr);
-            }
-            .gallery-item {
-                height: 180px;
-            }
-            .services-section, .events-section, .stories-section, .cta-section {
-                padding: 3rem 5%;
-            }
-            .services-grid, .stories-grid {
-                grid-template-columns: 1fr;
-            }
-            .event-card {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            .footer-column {
-                text-align: center;
-            }
-            #scrollToTopBtn {
-                right: 16px;
-                bottom: 16px;
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
+            .recognition-timeline::before { left: 20px; }
+            .timeline-item, .timeline-item:nth-child(even) { flex-direction: column; padding-left: 50px; }
+            .timeline-dot { left: 20px; }
+            .timeline-content, .timeline-item:nth-child(even) .timeline-content { width: 100%; margin: 0; }
+            .press-card { flex-direction: column; text-align: center; gap: 1.2rem; }
+            .recognition-section { padding: 3rem 5%; }
+            .hamburger { display: flex; }
+            nav { position: absolute; top: 70px; left: 0; width: 100vw; background: var(--primary-color); flex-direction: column; align-items: center; display: none; z-index: 1000; }
+            nav.active { display: flex; }
+            nav ul { flex-direction: column; width: 100%; align-items: center; }
+            nav ul li { margin: 1rem 0; }
+            .hero { flex-direction: column; min-height: unset; padding: 2rem 5% 6rem 5%; }
+            .hero-content { width: 100%; text-align: center; }
+            .hero-image { position: relative; margin: 2rem auto 0; width: 200px; height: 200px; right: unset; }
+            .about-section { flex-direction: column; gap: 2rem; padding: 3rem 5%; }
+            .event-card { flex-direction: column; gap: 1rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            .footer-column { text-align: center; }
         }
+
         @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.3rem;
-            }
-            .about-content h2, .section-header h2, .cta-content h2 {
-                font-size: 1.2rem;
-            }
-            .service-card, .story-card, .event-card {
-                padding: 1rem;
-            }
-            .gallery-item {
-                height: 120px;
-            }
-        }
-        /* Scroll-to-Reveal Animation */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(.4,2,.6,1), transform 0.8s cubic-bezier(.4,2,.6,1);
-        }
-        .reveal-on-scroll.revealed {
-            opacity: 1;
-            transform: none;
-        }
-        /* Enhanced Navigation Bar */
-        header {
-            background: #0d6153;
-            box-shadow: 0 2px 12px rgba(13,97,83,0.08);
-            border-bottom: 3px solid #f5c242;
-        }
-        nav {
-            position: relative;
-        }
-        nav:before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 6px;
-            background: #f5c242;
-            border-radius: 0 8px 8px 0;
-        }
-        nav ul li a {
-            position: relative;
-            padding-bottom: 4px;
-        }
-        nav ul li a:after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 0; right: 0; bottom: 0;
-            height: 3px;
-            background: #f5c242;
-            border-radius: 2px;
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-        nav ul li a:hover:after, nav ul li a:focus:after {
-            transform: scaleX(1);
+            .recognition-header h2 { font-size: 1.6rem; }
+            .press-card { padding: 1.2rem; }
         }
     </style>
 </head>
 <body>
+
     <!-- Header & Navigation -->
     <header class="reveal-on-scroll">
-        <div class="logo">
-            Annadatri
-        </div>
+        <div class="logo">Annadatri</div>
         <div class="hamburger" id="hamburger" aria-label="Open navigation" tabindex="0">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </div>
         <nav>
             <ul>
@@ -1059,7 +408,6 @@
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
-       
     </header>
 
     <!-- Hero Section -->
@@ -1074,24 +422,17 @@
             </div>
         </div>
         <div class="hero-image">
-            <img src="logo.png" alt="Intern/Volunteers helping distribute food">
+            <img src="logo.png" alt="Volunteers helping distribute food">
         </div>
         <div class="dots-decoration bottom-right-dots"></div>
     </section>
-
-    <!-- Trust Section -->
-    
 
     <!-- About Section -->
     <section class="about-section reveal-on-scroll" id="about">
         <div class="about-content">
             <h2>We fight malnutrition with your support!</h2>
-            <p>Here’s a version incorporating that:
-
-<p> Projet Annadatri was founded in 2025, Anusha took the lead to startthe effort, tackling nutrition challenges across all age groups in vulnerable communities.</p>
-<p>Our approach combines immediate food aid with long-term sustainability programs, nutrition education, and community empowerment initiatives that create lasting change.</p>
-
-
+            <p>Projet Annadatri was founded in 2025, Anusha took the lead to start the effort, tackling nutrition challenges across all age groups in vulnerable communities.</p>
+            <p>Our approach combines immediate food aid with long-term sustainability programs, nutrition education, and community empowerment initiatives that create lasting change.</p>
             <div class="about-features">
                 <div class="feature-item">Nutritionally balanced meal programs</div>
                 <div class="feature-item">Sustainable farming initiatives</div>
@@ -1123,8 +464,7 @@
         <div class="services-grid">
             <div class="service-card reveal-on-scroll">
                 <div class="service-icon">
-                    <img src="food-icon.svg" alt="Food icon" width="50" height="50"> 
-
+                    <img src="food-icon.svg" alt="Food icon" width="50" height="50">
                 </div>
                 <h3>Healthy Food</h3>
                 <p>Providing nutritionally balanced meals and food packages to vulnerable communities with emphasis on locally-sourced ingredients.</p>
@@ -1138,7 +478,7 @@
                 <p>Teaching communities about balanced diets, food preparation, and making healthy choices with limited resources.</p>
                 <a href="edu.html" class="read-more">Learn More</a>
             </div>
-            
+        </div>
     </section>
 
     <!-- Events Section -->
@@ -1161,7 +501,7 @@
                 <div class="event-content">
                     <div class="event-number">01</div>
                     <h3 class="event-title">Writing Competition</h3>
-                    <p class="event-description">🌾 Annadatri Writing Competition: "Seeds of Change: Writing Against Hunger" invited young minds to express their thoughts, stories, and solutions around hunger and food insecurity. Through poetry, essays, or short stories, participants raised awareness and inspired change. Let your words nourish hope and become a voice for the unheard.</p>
+                    <p class="event-description">🌾 Annadatri Writing Competition: "Seeds of Change: Writing Against Hunger" invited young minds to express their thoughts, stories, and solutions around hunger and food insecurity. Through poetry, essays, or short stories, participants raised awareness and inspired change.</p>
                     <div class="event-links">
                         <a href="https://docs.google.com/document/d/1jkfX3wOBG4sB_4zznF3d5j-RFE4WO-N56L0eVEm4uT0/edit?usp=sharing" target="_blank" class="btn-primary">Google Doc</a>
                         <a href="https://www.instagram.com/p/DL5G1KySC_m/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="btn-primary">Instagram Post</a>
@@ -1183,32 +523,9 @@
                 </div>
             </div>
         </div>
-        <script>
-        // Carousel/slider for event cards
-        document.addEventListener('DOMContentLoaded', function() {
-            const eventCards = document.querySelectorAll('#event-cards-container .event-card');
-            const prevBtn = document.getElementById('event-prev');
-            const nextBtn = document.getElementById('event-next');
-            let currentIndex = 0;
-            function showEvent(index) {
-                eventCards.forEach((card, i) => {
-                    card.style.display = (i === index) ? 'block' : 'none';
-                });
-            }
-            prevBtn.addEventListener('click', function() {
-                currentIndex = (currentIndex - 1 + eventCards.length) % eventCards.length;
-                showEvent(currentIndex);
-            });
-            nextBtn.addEventListener('click', function() {
-                currentIndex = (currentIndex + 1) % eventCards.length;
-                showEvent(currentIndex);
-            });
-            showEvent(currentIndex);
-        });
-        </script>
     </section>
 
-    <!-- Stories Section -->
+    <!-- Founder Section -->
     <section class="stories-section reveal-on-scroll" style="background: #f5c2421a; padding: 5rem 5% 4rem 5%;">
         <div class="stories-header" style="justify-content: center;">
             <div style="width:100%; text-align:center;">
@@ -1220,8 +537,71 @@
             <div class="reveal-on-scroll" style="background:#fff; border-radius:18px; box-shadow:0 8px 32px rgba(44,106,79,0.10); max-width:500px; width:100%; padding:2.5rem 2rem 2rem 2rem; text-align:center; position:relative;">
                 <img src="anusha.jpg" alt="Anusha" style="width:140px; height:140px; object-fit:cover; border-radius:50%; border:5px solid #f5c242; margin-bottom:1.5rem; box-shadow:0 2px 12px #f5c24255;">
                 <h3 style="color:#0d6153; font-size:1.6rem; margin-bottom:0.5rem;">Anusha</h3>
-                <blockquote style="font-size:1.15rem; color:#333; font-style:italic; margin-bottom:1.2rem; line-height:1.7;">“Hi, I’m Anusha — the founder of Annadatri. I started this initiative because I couldn’t ignore the hunger I saw around me every day. It broke my heart to see food wasted while so many went without a meal. Annadatri is my way of doing something about it — of turning concern into action. From coordinating donations to building a team of passionate changemakers, I’m here to make sure every plate counts.”</blockquote>
+                <blockquote style="font-size:1.15rem; color:#333; font-style:italic; margin-bottom:1.2rem; line-height:1.7;">"Hi, I'm Anusha — the founder of Annadatri. I started this initiative because I couldn't ignore the hunger I saw around me every day. It broke my heart to see food wasted while so many went without a meal. Annadatri is my way of doing something about it — of turning concern into action."</blockquote>
                 <a href="https://linktr.ee/_anusha" class="btn-primary" style="margin-top:1rem;">Connect</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         RECOGNITION SECTION
+    ============================================= -->
+    <section class="recognition-section reveal-on-scroll" id="recognition">
+        <div class="recognition-header">
+            <h2>Recognition</h2>
+            <div class="gold-line"></div>
+            <p>Milestones that mark our journey from a local idea to a global stage</p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="recognition-timeline">
+
+            <div class="timeline-item reveal-on-scroll">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2024 · Origin</div>
+                    <h3>Founding Annadatri</h3>
+                    <p>Launched Annadatri, a student-led initiative to bridge the gap between food waste and malnutrition — the foundation of a zero-hunger mission.</p>
+                    <span class="timeline-badge">🌱 Student Initiative</span>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal-on-scroll">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2024 · Tech</div>
+                    <h3>Ahaarvritti — Top 40, Samsung Solve for Tomorrow</h3>
+                    <p>Developed <strong>Ahaarvritti</strong>, a web app connecting donors with excess food directly to NGOs in real-time. Recognised in the <strong>Top 40 of Samsung Solve for Tomorrow (SFT)</strong> at IIT Delhi.</p>
+                    <span class="timeline-badge">🏆 Top 40 · IIT Delhi</span>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal-on-scroll">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2024 · Global</div>
+                    <h3>Top 50 Changemakers · United Nations, Geneva</h3>
+                    <p>Represented at the <strong>9th 1M1B Active Impact Summit</strong> at the United Nations, Geneva. Recognised as one of the <strong>World's Top 50 Changemakers</strong> in the Changemakers World Cup by 1M1B — felicitated at the UN headquarters in Geneva, Switzerland.</p>
+                    <span class="timeline-badge">🌍 Top 50 Worldwide · UN Geneva</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Press Feature -->
+        <div class="press-feature">
+            <h3>📰 In the Press</h3>
+            <div class="press-card">
+                <div class="press-logo">
+                    <span>Times of India</span>
+                </div>
+                <div class="press-card-content">
+                    <div class="label">Featured Article</div>
+                    <h4>Noida school shines at UN Summit — only UP school among global Top 8</h4>
+                    <a href="https://timesofindia.indiatimes.com/education/campus-talks/noida-school-shines-at-un-summit-only-up-school-among-global-top-8/articleshow/125972380.cms" target="_blank" rel="noopener">
+                        Read the feature →
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -1231,7 +611,7 @@
         <div class="cta-content">
             <h2>Join Our Mission to End Malnutrition</h2>
             <p>Your time, skills, and support can make a real difference in the fight against malnutrition. Join our Intern/Volunteer network or donate to help us reach more communities.</p>
-            <div class="cta-buttons">
+            <div class="cta-buttons" style="justify-content:center;">
                 <a href="https://forms.gle/LNG5nXBr5MqG7yoM9" class="btn-primary">Intern/Volunteer Now</a>
             </div>
         </div>
@@ -1244,11 +624,7 @@
             <p>Connect, donate, and track your impact in real-time.</p>
         </div>
         <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; height: 80vh; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-            <iframe 
-                src="https://ahaarvritti.netlify.app/" 
-                style="width: 100%; height: 100%; border: none;" 
-                title="Ahaarvritti Application">
-            </iframe>
+            <iframe src="https://ahaarvritti.netlify.app/" style="width: 100%; height: 100%; border: none;" title="Ahaarvritti Application"></iframe>
         </div>
     </section>
 
@@ -1256,10 +632,8 @@
     <footer id="contact" class="reveal-on-scroll">
         <div class="footer-content">
             <div class="footer-column">
-                <div class="logo">
-                    Annadatri
-                </div>
-               <p style="color: #666; margin-top: 1rem;">Working together to create a world where no one suffers from malnutrition or hunger.</p>
+                <div class="logo">Annadatri</div>
+                <p style="color: #666; margin-top: 1rem;">Working together to create a world where no one suffers from malnutrition or hunger.</p>
                 <div class="social-icons">
                     <a href="#" class="social-icon">f</a>
                     <a href="#" class="social-icon">t</a>
@@ -1275,6 +649,7 @@
                     <li><a href="#programs">Our Programs</a></li>
                     <li><a href="resources.html">Resources</a></li>
                     <li><a href="dashboard.html">Ahaarvritti</a></li>
+                    <li><a href="#recognition">Recognition</a></li>
                     <li><a href="https://forms.gle/LNG5nXBr5MqG7yoM9">Intern/Volunteer</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
@@ -1284,84 +659,56 @@
                 <ul class="footer-links">
                     <li><a href="food.html">Community Feeding</a></li>
                     <li><a href="edu.html">Nutrition Education</a></li>
-                   
                 </ul>
             </div>
-            
         </div>
         <div class="copyright">
             © 2025 Annadatri. All rights reserved. | <a href="#" style="color: #666;">Privacy Policy</a> | <a href="#" style="color: #666;">Terms of Service</a>
         </div>
     </footer>
-    <!-- Scroll-to-Top Button -->
-    <button id="scrollToTopBtn" title="Back to top" aria-label="Scroll to top">↑</button>
-    <!-- Add Font Awesome for icons (optional) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 
+    <button id="scrollToTopBtn" title="Back to top" aria-label="Scroll to top">↑</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script>
-    // --- Scroll-triggered Animations ---
-    function animateOnScroll() {
-        const elements = document.querySelectorAll('.animate-fadeInUp, .animate-fadeInLeft, .animate-fadeInRight');
-        const windowHeight = window.innerHeight;
-        elements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < windowHeight - 60) {
-                el.style.opacity = 1;
-                el.classList.add('animated');
-            }
-        });
-    }
-    document.addEventListener('scroll', animateOnScroll);
-    document.addEventListener('DOMContentLoaded', () => {
-        // Animate hero section
-        document.querySelector('.hero-content').classList.add('hero-animate');
-        document.querySelector('.hero-image').classList.add('hero-animate');
-        // Add animation classes to sections/cards
-        document.querySelectorAll('.about-section, .about-gallery, .services-section, .service-card, .events-section, .event-card, .stories-section, .story-card, .footer-content').forEach((el, i) => {
-            el.classList.add(i%2===0 ? 'animate-fadeInUp' : 'animate-fadeInLeft');
-        });
-        animateOnScroll();
-        // Scroll-to-top button
-        const scrollBtn = document.getElementById('scrollToTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                scrollBtn.style.display = 'block';
-            } else {
-                scrollBtn.style.display = 'none';
-            }
-        });
-        scrollBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
-    // Hamburger menu functionality
+    // Event carousel
     document.addEventListener('DOMContentLoaded', function() {
-        const hamburger = document.getElementById('hamburger');
-        const nav = document.querySelector('header nav');
-        hamburger.addEventListener('click', function() {
-            nav.classList.toggle('active');
-        });
-        hamburger.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') nav.classList.toggle('active');
-        });
-        // Close nav on link click (mobile)
-        nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                nav.classList.remove('active');
-            });
-        });
+        const eventCards = document.querySelectorAll('#event-cards-container .event-card');
+        const prevBtn = document.getElementById('event-prev');
+        const nextBtn = document.getElementById('event-next');
+        let currentIndex = 0;
+        function showEvent(index) {
+            eventCards.forEach((card, i) => { card.style.display = (i === index) ? 'block' : 'none'; });
+        }
+        prevBtn.addEventListener('click', function() { currentIndex = (currentIndex - 1 + eventCards.length) % eventCards.length; showEvent(currentIndex); });
+        nextBtn.addEventListener('click', function() { currentIndex = (currentIndex + 1) % eventCards.length; showEvent(currentIndex); });
+        showEvent(currentIndex);
     });
-    // Scroll-to-reveal for founder section
+
+    // Scroll reveal
     function revealOnScroll() {
         document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight - 60) {
-                el.classList.add('revealed');
-            }
+            if (el.getBoundingClientRect().top < window.innerHeight - 60) el.classList.add('revealed');
         });
     }
     document.addEventListener('scroll', revealOnScroll);
     document.addEventListener('DOMContentLoaded', revealOnScroll);
+
+    // Scroll-to-top
+    document.addEventListener('DOMContentLoaded', function() {
+        const scrollBtn = document.getElementById('scrollToTopBtn');
+        window.addEventListener('scroll', () => { scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+        scrollBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    });
+
+    // Hamburger
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.querySelector('header nav');
+        hamburger.addEventListener('click', function() { nav.classList.toggle('active'); });
+        hamburger.addEventListener('keypress', function(e) { if (e.key === 'Enter' || e.key === ' ') nav.classList.toggle('active'); });
+        nav.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { nav.classList.remove('active'); }); });
+    });
     </script>
 </body>
 </html>
