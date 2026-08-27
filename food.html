@@ -261,6 +261,7 @@ header button:hover {
 }
 
 </style>
+  <link rel="stylesheet" href="shared-minimal.css">
 </head>
 <body>
 
@@ -295,12 +296,12 @@ header button:hover {
   <div class="gallery-card" data-img="food distribution/food4.jpeg">
     <img src="food distribution/food4.jpeg" alt="Food 4" />
   </div>
-  <div class="gallery-card" data-img="food distribution/food5.jpeg">
-    <img src="food distribution/food5.jpeg" alt="Food 5" />
+  <div class="gallery-card" data-img="food distribution/food5-children.jpeg">
+    <img src="food distribution/food5-children.jpeg" alt="Children at an Annadatri community drive" />
   </div>
-  <div class="gallery-card" data-img="food distribution/food6.jpeg">
-    <img src="food distribution/food6.jpeg" alt="Food 6" />
-    <div class="caption">Patnership with @Parkshala</div>
+  <div class="gallery-card" data-img="food distribution/food6-children.jpeg">
+    <img src="food distribution/food6-children.jpeg" alt="Children at the Parkshala partnership event" />
+    <div class="caption">Partnership with @Parkshala</div>
   </div>
   
 </div>
@@ -331,9 +332,10 @@ header button:hover {
 
 <script>
   const gallery = document.getElementById('gallery');
-  const items = gallery.querySelectorAll('.gallery-item');
+  const items = gallery ? gallery.querySelectorAll('.gallery-item') : [];
 
   function updateActiveItem() {
+    if (!gallery) return;
     const galleryRect = gallery.getBoundingClientRect();
     let closestItem = null;
     let closestDistance = Infinity;
@@ -354,7 +356,7 @@ header button:hover {
     if (closestItem) closestItem.classList.add('active');
   }
 
-  gallery.addEventListener('scroll', () => {
+  gallery?.addEventListener('scroll', () => {
     requestAnimationFrame(updateActiveItem);
   });
 
